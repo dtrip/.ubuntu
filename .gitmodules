@@ -13,3 +13,6 @@
 [submodule "vim"]
 	path = vim
 	url = https://github.com/wgallios/Vim-Settings
+[submodule "zsh-autosuggestions"]
+	path = zsh-autosuggestions
+	url = git@github.com:wgallios/zsh-autosuggestions.git
