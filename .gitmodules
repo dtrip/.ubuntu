@@ -10,3 +10,6 @@
 [submodule "oh-my-zsh-powerline"]
 	path = oh-my-zsh-powerline
 	url = git@github.com:wgallios/oh-my-zsh-powerline-theme.git
+[submodule "vim"]
+	path = vim
+	url = https://github.com/wgallios/Vim-Settings

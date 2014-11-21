@@ -15,6 +15,21 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 log_daemon_msg "Setting up bashrc submodule ..."
     /bin/sh/ "$DIR/bashrc/install"
 log_end_msg 0
+
+# sets up zsh
 log_daemon_msg "Setting up zshrc submodule ..."
     /bin/sh "$DIR/zshrc/install"
 log_end_msg 0
+
+
+# downloads install script for oh-my-zsh plugin
+log_daemon_msg "Setting up oh-my-zsh ..."
+    wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+log_end_msg 0
+
+# Setups up VIM settings
+log_daemon_msg "Setting up VIM ..."
+    mkdir ~/.vim # creates dir
+    ln -s ~/.vimrc "$DIR/vim/vimrc"
+log_end_msg 0
+
