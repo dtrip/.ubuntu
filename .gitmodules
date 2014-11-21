@@ -1,0 +1,12 @@
+[submodule "zshrc"]
+	path = zshrc
+	url = git@github.com:wgallios/zshrc.git
+[submodule "tmux"]
+	path = tmux
+	url = git@github.com:wgallios/tmux.git
+[submodule "bashrc"]
+	path = bashrc
+	url = git@github.com:wgallios/bashrc.git
+[submodule "oh-my-zsh-powerline"]
+	path = oh-my-zsh-powerline
+	url = git@github.com:wgallios/oh-my-zsh-powerline-theme.git

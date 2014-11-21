@@ -1,0 +1,20 @@
+#! /bin/sh
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+# present working directory
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# goes through and executes each install script
+log_daemon_msg "Setting up bashrc submodule ..."
+    /bin/sh/ "$DIR/bashrc/install"
+log_end_msg 0
+log_daemon_msg "Setting up zshrc submodule ..."
+    /bin/sh "$DIR/zshrc/install"
+log_end_msg 0
