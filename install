@@ -31,6 +31,11 @@ log_daemon_msg "Setting up oh-my-zsh ..."
     wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 log_end_msg 0
 
+# changes default shell from /bin/bash to /bin/zsh (
+log_daemon_msg "Setting zsh as default shell ..."
+chsh -s $(which zsh)
+log_end_msg 0
+
 # Setups up VIM settings
 log_daemon_msg "Setting up VIM ..."
     mkdir ~/.vim # creates dir
