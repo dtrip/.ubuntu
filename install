@@ -8,101 +8,22 @@
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-# present working directory
-DIR=$(dirname $(readlink -e $0)) ;
-LOGFILE='install.log'
+# to Download and execute:
+# $ wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh
 
+# DIR=$(dirname $(readlink -e $0)) ;
 
-# ensures log file has been created
-touch "$DIR/log/$LOGFILE" > /dev/null
+# ensures folder for src has been created
+mkdir -p ~/.ubuntu > /dev/null
 
-echo "\nUbuntu System Setup\n"
+# clones repo
+git clone https://raw.githubusercontent.com/wgallios/.ubuntu/master/install ~/.ubuntu > /dev/null
 
-# gets sudo rights
-sudo -v >> "$DIR/log/$LOGFILE"
+# changes dir to that directory
+cd ~/.ubuntu > /dev/null
 
-printf "\nThis install process will switch your default shell to zsh as well as make some other changes.\nDo you wish to continue? [Y/n]: "
-read CONTINUE
-CONTINUE=$(echo $CONTINUE | tr 'a-z' 'A-Z')
+# ensures setup script can be executed
+chmod +x ~/.ubuntu/scripts/setup > /dev/null
 
-
-# enables shell option for no case matching in strings
-# 
-# to disable this:
-#   shopt -u nocasematch
-# shopt -s nocasematch
-
-if [ "$CONTINUE" = 'N' ] || [ "$CONTINUE" = 'NO' ]; then
-    echo "Exiting!"
-    exit 1
-fi
-
-printf "\nIs this being install on desktop with a desktop manager (gnome, unity, kde etc)?\nNo if server [Y/n]: "
-
-read DESK
-DESK=$(echo $DESK | tr 'a-z' 'A-Z')
-
-echo ""
-
-if [ "$DESK" = 'Y' ] || [ "$DESK" = 'YES' ] || [ -z $DESK ]; then
-
-    log_daemon_msg "Installing packages ..."
-        # sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn
-    # install appropriate packages
-        sudo apt-get -y update >> "$DIR/log/$LOGFILE"
-        # sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology >> "$DIR/log/$LOGFILE"
-    log_end_msg 0
-
-fi
-
-exit 1
-
-# copies over asset imgs and such
-log_daemon_msg "Copying assets..."
-    mkdir -p ~/.icons >> "$DIR/log/$LOGFILE"
-    cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons >> "$DIR/log/$LOGFILE"
-    cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons /dev/null
-log_end_msg 0
-
-# goes through and executes each install script
-log_daemon_msg "Setting up bashrc submodule ..."
-    /bin/sh/ "$DIR/bashrc/install" >> "$DIR/log/$LOGFILE"
-    echo `source ~/.bashrc` >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-# downloads install script for oh-my-zsh plugin
-log_daemon_msg "Setting up oh-my-zsh ..."
-    wget --no-check-certificate http://install.ohmyz.sh -O - | sh /dev/null
-log_end_msg 0
-
-# changes default shell from /bin/bash to /bin/zsh (
-log_daemon_msg "Setting zsh as default shell ..."
-    chsh -s $(which zsh) >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-# sets up zsh
-log_daemon_msg "Setting up zshrc submodule ..."
-    /bin/sh "$DIR/zshrc/install" >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-
-log_daemon_msg "Changing shell to zsh ..."
-    zsh >> "$DIR/log/$LOGFILE"
-    echo `source ~/.zshrc` >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-
-# Setups up VIM settings
-log_daemon_msg "Setting up VIM ..."
-    mkdir ~/.vim >> "$DIR/log/$LOGFILE" # creates dir
-    ln -s ~/.vimrc "$DIR/vim/vimrc" >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-# seting zsh-autcomplete
-log_daemon_msg "Setting up zsh-autosuggestions ..."
-    /bin/sh "$DIR/zsh-autosuggestions/install" >> "$DIR/log/$LOGFILE"
-log_end_msg 0
-
-echo "\nSuccess: System setup complete!"
-
-exit 0
+# executes setup script
+/bin/sh ~/.ubuntu/scripts/setup"

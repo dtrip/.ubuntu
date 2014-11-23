@@ -3,6 +3,12 @@
 
 Ubuntu ~/ Settings
 
+## Install
+```
+wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh
+
+```
+
 ## License
 
 The MIT License (MIT)
