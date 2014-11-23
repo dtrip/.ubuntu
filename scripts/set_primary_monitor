@@ -6,4 +6,4 @@
 #
 # Note: You can permanently set this in ~/.config/monitors.xml
 
-xrandr --output HDMI1 --primary
+xrandr --output HDMI1 --primary > /dev/null
