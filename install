@@ -36,6 +36,12 @@ log_end_msg 0
 # install appropriate packages
 sudo apt-get install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh
 
+# copies over asset imgs and such
+log_daemon_msg "Copying assets..."
+mkdir -p ~/.icons
+cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons
+cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons
+log_end_msg 0
 
 # downloads install script for oh-my-zsh plugin
 log_daemon_msg "Setting up oh-my-zsh ..."
