@@ -71,7 +71,7 @@ if [ "$DESK" = 'Y' ] || [ "$DESK" = 'YES' ] || [ -z $DESK ]; then
     log_end_msg 0
 
     log_daemon_msg "Extracting assets ..."
-    tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" # <--- login theme name tarball
+        tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets" # <--- login theme name tarball
 
     log_end_msg 0
 

@@ -2,5 +2,9 @@
 *.swp
 *.swo
 *.log
+
+# path to extracted theme
+assets/nospeedlimit/*
+
 log/*
 !log/__empty__
