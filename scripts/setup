@@ -1,5 +1,8 @@
 #! /bin/sh
 
+# clears screen
+clear
+
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 
@@ -8,11 +11,14 @@
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-    # TODO: change DIR to get parent path of scripts which should be .ubuntu
+# TODO: change DIR to get parent path of scripts which should be .ubuntu
 # present working directory
 DIR=$(dirname $(readlink -e $0)) ;
-LOGFILE='install.log'
 
+# gets partent of DIR
+DIR=$(dirname $(readlink -e $DIR))
+
+LOGFILE='install.log'
 
 # ensures log file has been created
 touch "$DIR/log/$LOGFILE" > /dev/null

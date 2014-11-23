@@ -9,7 +9,7 @@
 . /lib/lsb/init-functions
 
 # to Download and execute:
-# $ wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh
+wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh > /dev/null
 
 # DIR=$(dirname $(readlink -e $0)) ;
 
@@ -26,4 +26,4 @@ cd ~/.ubuntu > /dev/null
 chmod +x ~/.ubuntu/scripts/setup > /dev/null
 
 # executes setup script
-/bin/sh ~/.ubuntu/scripts/setup"
+/bin/sh ~/.ubuntu/scripts/setup
