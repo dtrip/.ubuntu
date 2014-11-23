@@ -12,28 +12,45 @@
 DIR=$(dirname $(readlink -e $0)) ;
 
 echo "\nUbuntu System Setup\n"
-echo "This install process will switch your default shell to zsh as well as make some other changes. Do you wish to continue? [Y/n] "
-read CONTINUE
 
-if ["$CONTINUE" = 'n'] || ["$CONTINUE" = 'N' ]; then
+# gets sudo rights
+sudo -v > /dev/null
+
+printf "\nThis install process will switch your default shell to zsh as well as make some other changes.\nDo you wish to continue? [Y/n]: "
+read CONTINUE
+CONTINUE=$(echo $CONTINUE | tr 'a-z' 'A-Z')
+
+
+# enables shell option for no case matching in strings
+# 
+# to disable this:
+#   shopt -u nocasematch
+# shopt -s nocasematch
+
+if [ "$CONTINUE" = 'N' ] || [ "$CONTINUE" = 'NO' ]; then
     echo "Exiting!"
     exit 1
 fi
 
+printf "\nIs this being install on desktop with a desktop manager (gnome, unity, kde etc)?\nNo if server [Y/n]: "
 
 read DESK
+DESK=$(echo $DESK | tr 'a-z' 'A-Z')
 
-if ["$DESK" = 'yes'] || ["$DESK" = 'Y' ]; then
+echo ""
+
+if [ "$DESK" = 'Y' ] || [ "$DESK" = 'YES' ] || [ -z $DESK ]; then
+
+    log_daemon_msg "Installing packages ..."
+        # sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn
+    # install appropriate packages
+        sudo apt-get -y update > /dev/null
+        # sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology > /dev/null
+    log_end_msg 0
+
+fi
 
 exit 1
-
-
-log_daemon_msg "Installing packages ..."
-    sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn
-# install appropriate packages
-    sudo apt-get -y update > /dev/null
-    sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology > /dev/null
-log_end_msg 0
 
 # copies over asset imgs and such
 log_daemon_msg "Copying assets..."
