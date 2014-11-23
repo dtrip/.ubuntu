@@ -27,53 +27,57 @@ if ["$DESK" = 'yes'] || ["$DESK" = 'Y' ]; then
 
 exit 1
 
+
+log_daemon_msg "Installing packages ..."
+    sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn
+# install appropriate packages
+sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh
+log_end_msg 0
+
+# copies over asset imgs and such
+log_daemon_msg "Copying assets..."
+    mkdir -p ~/.icons > /dev/null
+    cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons > /dev/null
+    cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons /dev/null
+log_end_msg 0
+
 # goes through and executes each install script
 log_daemon_msg "Setting up bashrc submodule ..."
     /bin/sh/ "$DIR/bashrc/install" > /dev/null
     echo `source ~/.bashrc` > /dev/null
 log_end_msg 0
 
-# install appropriate packages
-sudo apt-get install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh
-
-# copies over asset imgs and such
-log_daemon_msg "Copying assets..."
-mkdir -p ~/.icons > /dev/null
-cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons > /dev/null
-cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons /dev/null
-log_end_msg 0
-
 # downloads install script for oh-my-zsh plugin
 log_daemon_msg "Setting up oh-my-zsh ..."
-wget --no-check-certificate http://install.ohmyz.sh -O - | sh /dev/null
+    wget --no-check-certificate http://install.ohmyz.sh -O - | sh /dev/null
 log_end_msg 0
 
 # changes default shell from /bin/bash to /bin/zsh (
 log_daemon_msg "Setting zsh as default shell ..."
-chsh -s $(which zsh) > /dev/null
+    chsh -s $(which zsh) > /dev/null
 log_end_msg 0
 
 # sets up zsh
 log_daemon_msg "Setting up zshrc submodule ..."
-/bin/sh "$DIR/zshrc/install" > /dev/null
+    /bin/sh "$DIR/zshrc/install" > /dev/null
 log_end_msg 0
 
 
 log_daemon_msg "Changing shell to zsh ..."
-zsh
-echo `source ~/.zshrc` > /dev/null
+    zsh > /dev/null
+    echo `source ~/.zshrc` > /dev/null
 log_end_msg 0
 
 
 # Setups up VIM settings
 log_daemon_msg "Setting up VIM ..."
-mkdir ~/.vim > /dev/null # creates dir
-ln -s ~/.vimrc "$DIR/vim/vimrc" > /dev/null
+    mkdir ~/.vim > /dev/null # creates dir
+    ln -s ~/.vimrc "$DIR/vim/vimrc" > /dev/null
 log_end_msg 0
 
 # seting zsh-autcomplete
 log_daemon_msg "Setting up zsh-autosuggestions ..."
-/bin/sh "$DIR/zsh-autosuggestions/install" > /dev/null
+    /bin/sh "$DIR/zsh-autosuggestions/install" > /dev/null
 log_end_msg 0
 
 echo "\nSuccess: System setup complete!"
