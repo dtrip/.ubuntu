@@ -16,3 +16,6 @@
 [submodule "zsh-autosuggestions"]
 	path = zsh-autosuggestions
 	url = git@github.com:wgallios/zsh-autosuggestions.git
+[submodule "rainbow.sh"]
+	path = rainbow.sh
+	url = git@github.com:wgallios/rainbow.sh.git

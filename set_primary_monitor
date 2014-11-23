@@ -1,0 +1,8 @@
+#!/bin/sh
+# use this for a startup script to set primary monitor
+#
+# xrandr --query
+# - will provide list of monitors
+#
+
+xrandr --output HDMI1 --primary

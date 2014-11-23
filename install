@@ -8,27 +8,38 @@
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-
 # present working directory
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DIR=$(dirname $(readlink -e $0)) ;
 
-# install appropriate packages
-sudo apt-get install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy
+echo "\nUbuntu System Setup\n"
+echo "This install process will switch your default shell to zsh as well as make some other changes. Do you wish to continue? [Y/n] "
+read CONTINUE
+
+if ["$CONTINUE" = 'n'] || ["$CONTINUE" = 'N' ]; then
+    echo "Exiting!"
+    exit 1
+fi
+
+
+read DESK
+
+if ["$DESK" = 'yes'] || ["$DESK" = 'Y' ]; then
+
+exit 1
 
 # goes through and executes each install script
 log_daemon_msg "Setting up bashrc submodule ..."
     /bin/sh/ "$DIR/bashrc/install"
+    echo `source ~/.bashrc` > /dev/null
 log_end_msg 0
 
-# sets up zsh
-log_daemon_msg "Setting up zshrc submodule ..."
-    /bin/sh "$DIR/zshrc/install"
-log_end_msg 0
+# install appropriate packages
+sudo apt-get install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh
 
 
 # downloads install script for oh-my-zsh plugin
 log_daemon_msg "Setting up oh-my-zsh ..."
-    wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 log_end_msg 0
 
 # changes default shell from /bin/bash to /bin/zsh (
@@ -36,18 +47,31 @@ log_daemon_msg "Setting zsh as default shell ..."
 chsh -s $(which zsh)
 log_end_msg 0
 
+# sets up zsh
+log_daemon_msg "Setting up zshrc submodule ..."
+/bin/sh "$DIR/zshrc/install"
+log_end_msg 0
+
+
+log_daemon_msg "Changing shell to zsh ..."
+zsh
+echo `source ~/.zshrc` > /dev/null
+log_end_msg 0
+
+
 # Setups up VIM settings
 log_daemon_msg "Setting up VIM ..."
-    mkdir ~/.vim # creates dir
-    ln -s ~/.vimrc "$DIR/vim/vimrc"
+mkdir ~/.vim # creates dir
+ln -s ~/.vimrc "$DIR/vim/vimrc"
 log_end_msg 0
 
 # seting zsh-autcomplete
 log_daemon_msg "Setting up zsh-autosuggestions ..."
-    /bin/sh "$DIR/zsh-autosuggestions/install"
+/bin/sh "$DIR/zsh-autosuggestions/install"
 log_end_msg 0
 
 
-echo "\n___System setup complete!________\n"
+# echo "\n${BGREEN}SUCCESS${RESET}${BOLD}System setup complete!${RESET}\n"
+echo "\nSuccess: System setup complete!"
 
 exit 0
