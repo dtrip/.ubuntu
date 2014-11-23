@@ -4,5 +4,6 @@
 # xrandr --query
 # - will provide list of monitors
 #
+# Note: You can permanently set this in ~/.config/monitors.xml
 
 xrandr --output HDMI1 --primary
