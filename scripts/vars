@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "VARS!!"
+
+# file name of tarball in assets/gdm_themes
+export THEMETAR='42736-nospeedlimit.tar.gz'
+export LOGFILE='install.log'

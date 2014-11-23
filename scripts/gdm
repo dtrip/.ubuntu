@@ -1,0 +1,21 @@
+#! /bin/sh
+
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
+
+# gets partent of DIR
+# DIR=$(dirname $(readlink -e $0))
+# export DIR=$(dirname $(readlink -e $DIR))
+
+# LOGFILE='install.log'
+
+log_daemon_msg "Extracting assets ..."
+echo "$DIR/assets/gdm_themes/$THEMETAR"
+    tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets"  >> "$DIR/log/$LOGFILE"
+
+log_end_msg 0

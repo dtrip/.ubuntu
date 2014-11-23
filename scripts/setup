@@ -11,18 +11,14 @@ clear
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
+DIR=$(dirname $(readlink -e $0)) ;
+export DIR=$(dirname $(readlink -e $DIR))
+"./vars"
+
 # TODO: change DIR to get parent path of scripts which should be .ubuntu
 # present working directory
-DIR=$(dirname $(readlink -e $0)) ;
-
-# gets partent of DIR
-DIR=$(dirname $(readlink -e $DIR))
-
-LOGFILE='install.log'
-
-# file name of tarball in assets/gdm_themes
-THEMETAR='42736-nospeedlimit.tar.gz'
-
+# DIR=$(dirname $(readlink -e $0)) ;
+echo "LOGFILE: $LOGFILE"
 # ensures log file has been created
 touch "$DIR/log/$LOGFILE" > /dev/null
 
@@ -58,23 +54,19 @@ if [ "$DESK" = 'Y' ] || [ "$DESK" = 'YES' ] || [ -z $DESK ]; then
 
     # upgrades the system
     log_daemon_msg "Upgrading system ..."
-        sudo apt-get -y update >> "$DIR/log/$LOGFILE"
-        sudo apt-get -y upgrade >> "$DIR/log/$LOGFILE"
-        sudo apt-get -y dist-upgrade >> "$DIR/log/$LOGFILE"
+        # sudo apt-get -y update >> "$DIR/log/$LOGFILE"
+        # sudo apt-get -y upgrade >> "$DIR/log/$LOGFILE"
+        # sudo apt-get -y dist-upgrade >> "$DIR/log/$LOGFILE"
     log_end_msg 0
 
     log_daemon_msg "Installing packages ..."
         # sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn
         # install appropriate packages
-        sudo apt-get -y update >> "$DIR/log/$LOGFILE"
-        sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology slim >> "$DIR/log/$LOGFILE"
+        # sudo apt-get -y update >> "$DIR/log/$LOGFILE"
+        # sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology slim >> "$DIR/log/$LOGFILE"
     log_end_msg 0
 
-    log_daemon_msg "Extracting assets ..."
-        tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets" # <--- login theme name tarball
-
-    log_end_msg 0
-
+    "$DIR/scripts/gdm"
 fi
 
 exit 1
