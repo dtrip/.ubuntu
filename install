@@ -29,7 +29,7 @@ exit 1
 
 # goes through and executes each install script
 log_daemon_msg "Setting up bashrc submodule ..."
-    /bin/sh/ "$DIR/bashrc/install"
+    /bin/sh/ "$DIR/bashrc/install" > /dev/null
     echo `source ~/.bashrc` > /dev/null
 log_end_msg 0
 
@@ -38,24 +38,24 @@ sudo apt-get install trash-cli mutt centerim vim git tmux multitail ack-grep nod
 
 # copies over asset imgs and such
 log_daemon_msg "Copying assets..."
-mkdir -p ~/.icons
-cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons
-cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons
+mkdir -p ~/.icons > /dev/null
+cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons > /dev/null
+cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons /dev/null
 log_end_msg 0
 
 # downloads install script for oh-my-zsh plugin
 log_daemon_msg "Setting up oh-my-zsh ..."
-wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+wget --no-check-certificate http://install.ohmyz.sh -O - | sh /dev/null
 log_end_msg 0
 
 # changes default shell from /bin/bash to /bin/zsh (
 log_daemon_msg "Setting zsh as default shell ..."
-chsh -s $(which zsh)
+chsh -s $(which zsh) > /dev/null
 log_end_msg 0
 
 # sets up zsh
 log_daemon_msg "Setting up zshrc submodule ..."
-/bin/sh "$DIR/zshrc/install"
+/bin/sh "$DIR/zshrc/install" > /dev/null
 log_end_msg 0
 
 
@@ -67,17 +67,15 @@ log_end_msg 0
 
 # Setups up VIM settings
 log_daemon_msg "Setting up VIM ..."
-mkdir ~/.vim # creates dir
-ln -s ~/.vimrc "$DIR/vim/vimrc"
+mkdir ~/.vim > /dev/null # creates dir
+ln -s ~/.vimrc "$DIR/vim/vimrc" > /dev/null
 log_end_msg 0
 
 # seting zsh-autcomplete
 log_daemon_msg "Setting up zsh-autosuggestions ..."
-/bin/sh "$DIR/zsh-autosuggestions/install"
+/bin/sh "$DIR/zsh-autosuggestions/install" > /dev/null
 log_end_msg 0
 
-
-# echo "\n${BGREEN}SUCCESS${RESET}${BOLD}System setup complete!${RESET}\n"
 echo "\nSuccess: System setup complete!"
 
 exit 0
