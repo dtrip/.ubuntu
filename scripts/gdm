@@ -4,15 +4,47 @@
 
 log_daemon_msg "Extracting assets and setting up Login screen  ..."
 
-    # extracts the log file
-    tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets/gdm_themes" >> "DIR/log/$LOGFILE"
+    # copies over background images
+    sudo cp -n "$DIR/assets/backgrounds/*" /usr/share/backgrounds >> "$DIR/log/$LOGFILE"
+    sudo cp -n "$DIR/assets/background/$BGLOCK" /usr/share/gnome-shell/theme >> "$DIR/log/$LOGFILE"
+    sudo chmod 744 "/usr/share/gnome-shell/theme/$BGLOCK" # permission: readable to all (rwx-r--r--)
+
+    dconf gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/$BG" >> "$DIR/log/$LOGFILE"
+
+    ## Escape path for sed using bash find and replace 
+    BGLOCK_E="${BGLOCK//\//\\/}"
+
+    # replace lock background with BGLOCK variable
+    sudo sed --quiet 's/noise-texture.png/${BGLOCK_E}/g' > /tmp/.ubuntu.gnome-shell.css
+
+    # replace: /usr/share/gnome-shell/theme/gnome-shell.css
+
+    #backs up the gnome file
+    sudo cp /usr/share/gnome-shell/theme/gnome-shell.css ~/gnome-shell.css.ubuntu.bak
+
+    # deletes old css file
+    sudo rm -f /usr/share/gnome-shell/theme/gnome-shell.css
+
+    # copies gnome css file
+    sudo cp -f /tmp/.ubuntu.gnome-shell.css /usr/share/gnome-shell/theme/gnome-shell.css
+
+    # extracts the login theme file
+    # tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets/gdm_themes" >> "DIR/log/$LOGFILE"
 
     #copy assets to proper locations
-    sudo cp $DIR/assets/gdm_themes/nospeedlimit/chase.jpg /usr/share/backgrounds
-    
+    # sudo cp $DIR/assets/gdm_themes/nospeedlimit/chase.jpg /usr/share/backgrounds
+
+    # ensures .xinitrc file has been created
+    # touch ~/.xinitrc > "$DIR/log/$LOGFILE"
+
+    # reconfigures gdm and allows to select display manager
+    # sudo dpkg-reconfigure gdm
+
+    # adds necessary config to slim
+    # echo "sessiondir /usr/share/xsessions" >> /etc/slim.conf
 
     # installs 
-    su - gdm -s /bin/bash
+    # su - gdm -s /bin/bash
     # `dbus-launch | sed "s/^/export /"`
     # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/FILE.JPG"
     # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.interface gtk-theme ""

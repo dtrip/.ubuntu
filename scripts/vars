@@ -12,5 +12,41 @@
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
 
+PACKAGES=(
+    'trash-cli'
+    'mutt'
+    'centerim'
+    'vim'
+    'git'
+    'tmux'
+    'multitail'
+    'ack-grep'
+    'nodejs'
+    'nodejs-legacy'
+    'zsh'
+    'tilda'
+    'terminology'
+    'slim'
+    'slidewall'
+    'compiz-plugins-livewallpapers'
+    'faience-theme'
+    )
+
+# file name of background image to be used,
+# must be included in assets/backgrounds prior to execution
+# better remind them about that
+BG='ubuntu-sky.jpg'
+BGLOCK='ubuntu-sky.jpg'
+BGLOGIN='-ubuntu-sky.jpg'
+THEME=''
+
+# parent directory of ~/.ubuntu/scripts/vars </\--(YOU ARE HERE)
+# which after the two DIR=* lines should be: ~/.ubuntu
 DIR=$(dirname $(readlink -e $0))
 DIR=$(dirname $(readlink -e $DIR))
+
+# Ubuntu's short release version name: trusty, utopic, etc..
+REL=$(lsb_release -cs)
+
+# join array function
+function join { local IFS="$1"; shift; echo "$*"; }

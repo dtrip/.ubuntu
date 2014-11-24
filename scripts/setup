@@ -5,6 +5,10 @@ clear
 
 . ./scripts/vars
 
+# ARRAY=('Will' 'Juice' 'Cynthia' 'Ev' 'banana')
+# echo join , $ARRAY
+exit 1
+
 # ensures log file has been created
 touch "$DIR/log/$LOGFILE" > /dev/null
 
