@@ -1,0 +1,30 @@
+#!/bin/bash
+
+. ./scripts/vars
+
+# downloads install script for oh-my-zsh plugin
+log_daemon_msg "Setting up oh-my-zsh ..."
+    wget --no-check-certificate http://install.ohmyz.sh -O - | sh /dev/null
+log_end_msg 0
+
+# changes default shell from /bin/bash to /bin/zsh (
+log_daemon_msg "Setting zsh as default shell ..."
+    chsh -s $(which zsh) >> "$DIR/log/$LOGFILE"
+log_end_msg 0
+
+# sets up zsh
+log_daemon_msg "Setting up zshrc submodule ..."
+    .$DIR/zshrc/install >> "$DIR/log/$LOGFILE"
+log_end_msg 0
+
+
+log_daemon_msg "Changing shell to zsh ..."
+    zsh >> "$DIR/log/$LOGFILE"
+    echo `source ~/.zshrc` >> "$DIR/log/$LOGFILE"
+log_end_msg 0
+
+
+# seting zsh-autcomplete
+log_daemon_msg "Setting up zsh-autosuggestions ..."
+    .$DIR/zsh-autosuggestions/install >> "$DIR/log/$LOGFILE"
+log_end_msg 0

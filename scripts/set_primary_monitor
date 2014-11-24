@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # use this for a startup script to set primary monitor
 #
 # xrandr --query

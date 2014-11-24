@@ -1,21 +1,20 @@
-#! /bin/sh
+#!/bin/bash
 
-# Load the VERBOSE setting and other rcS variables
-. /lib/init/vars.sh
+. ./scripts/vars
 
-# Define LSB log_* functions.
-# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
-# and status_of_proc is working.
-. /lib/lsb/init-functions
+log_daemon_msg "Extracting assets and setting up Login screen  ..."
 
-# gets partent of DIR
-# DIR=$(dirname $(readlink -e $0))
-# export DIR=$(dirname $(readlink -e $DIR))
+    # extracts the log file
+    tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets/gdm_themes" >> "DIR/log/$LOGFILE"
 
-# LOGFILE='install.log'
+    #copy assets to proper locations
+    sudo cp $DIR/assets/gdm_themes/nospeedlimit/chase.jpg /usr/share/backgrounds
+    
 
-log_daemon_msg "Extracting assets ..."
-echo "$DIR/assets/gdm_themes/$THEMETAR"
-    tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets"  >> "$DIR/log/$LOGFILE"
+    # installs 
+    su - gdm -s /bin/bash
+    # `dbus-launch | sed "s/^/export /"`
+    # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/FILE.JPG"
+    # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.interface gtk-theme ""
 
 log_end_msg 0

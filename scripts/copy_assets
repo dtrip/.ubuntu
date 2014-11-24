@@ -1,0 +1,13 @@
+#!/bin/bash
+
+. ./scripts/vars
+
+# copies over asset imgs and such
+log_daemon_msg "Copying assets..."
+    mkdir -p ~/.icons >> "$DIR/log/$LOGFILE"
+    cp "$DIR/imgs/ubuntu-logo-basic.svg" ~/.icons >> "$DIR/log/$LOGFILE"
+    cp "$DIR/imgs/ubuntu-logo-tilt-256.png" ~/.icons /dev/null
+log_end_msg 0
+
+
+

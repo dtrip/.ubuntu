@@ -1,7 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
-echo "VARS!!"
+# Load the VERBOSE setting and other rcS variables
+. /lib/init/vars.sh
+
+# Define LSB log_* functions.
+# Depend on lsb-base (>= 3.2-14) to ensure that this file is present
+# and status_of_proc is working.
+. /lib/lsb/init-functions
 
 # file name of tarball in assets/gdm_themes
-export THEMETAR='42736-nospeedlimit.tar.gz'
-export LOGFILE='install.log'
+THEMETAR='42735-nospeedlimit.tar.gz'
+LOGFILE='install.log'
+
+DIR=$(dirname $(readlink -e $0))
+DIR=$(dirname $(readlink -e $DIR))

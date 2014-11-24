@@ -1,0 +1,12 @@
+#!/bin/bash
+
+printf "\nThis install process will switch your default shell to zsh as well as make some other changes.\nDo you wish to continue? [Y/n]: "
+
+read CONTINUE
+
+CONTINUE=$(echo $CONTINUE | tr 'a-z' 'A-Z')
+
+if [ "$CONTINUE" = 'N' ] || [ "$CONTINUE" = 'NO' ]; then
+    echo "Exiting!"
+    exit 1
+fi

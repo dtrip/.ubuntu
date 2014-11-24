@@ -1,0 +1,9 @@
+#!/bin/bash
+
+. ./scripts/vars
+
+# Setups up VIM settings
+log_daemon_msg "Setting up VIM ..."
+    mkdir ~/.vim >> "$DIR/log/$LOGFILE" # creates dir
+    ln -s ~/.vimrc "$DIR/vim/vimrc" >> "$DIR/log/$LOGFILE"
+log_end_msg 0
