@@ -5,6 +5,9 @@
 # install appropriate packages
 log_daemon_msg "Installing packages ..."
 
+    # adds google linux repo
+    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+
     # ppa for terminology
     sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn >> "$DIR/log/$LOGFILE"
 
@@ -21,11 +24,15 @@ log_daemon_msg "Installing packages ..."
     echo "deb http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
     echo "deb-src http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
 
+    # adds repo for google chrome
+    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+
+    # updates apt
     sudo apt-get -y update >> "$DIR/log/$LOGFILE"
 
     # sudo apt-get -y install trash-cli mutt centerim vim git tmux multitail ack-grep nodejs nodejs-legacy zsh tilda terminology slim slidewall compiz-plugins-livewallpapers faience-theme >> "$DIR/log/$LOGFILE"
     sudo apt-get -y install $PKGS
-    
+
     # set the splash page when booting - user must select it
     sudo update-alternatives --config default.plymouth >> "$DIR/log/$LOGFILE"
     sudo update-initramfs -u >> "$DIR/log/$LOGFILE"
