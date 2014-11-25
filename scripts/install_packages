@@ -4,9 +4,22 @@
 
 # install appropriate packages
 log_daemon_msg "Installing packages ..."
+
+    # ppa for terminology
     sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn >> "$DIR/log/$LOGFILE"
+
+    # TODO ppa for?
     sudo add-apt-repository -y ppa:noobslab/apps >> "$DIR/log/$LOGFILE"
+
+    # ppa for faience-theme
     sudo add-apt-repository -y ppa:tiheum/equinox >> "$DIR/log/$LOGFILE"
+
+    #fs-icons theme
+    sudo add-apt-repository -y ppa:noobslab/icons2 >> "$DIR/log/$LOGFILE"
+
+    # addeds sources for docky
+    echo "deb http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
+    echo "deb-src http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
 
     sudo apt-get -y update >> "$DIR/log/$LOGFILE"
 
@@ -14,7 +27,7 @@ log_daemon_msg "Installing packages ..."
     sudo apt-get -y install $PKGS
     
     # set the splash page when booting - user must select it
-    sudo update-alternatives --config default.plymouth
-    sudo update-initramfs -u
+    sudo update-alternatives --config default.plymouth >> "$DIR/log/$LOGFILE"
+    sudo update-initramfs -u >> "$DIR/log/$LOGFILE"
 
 log_end_msg 0

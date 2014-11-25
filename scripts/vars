@@ -8,9 +8,16 @@
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
-# file name of tarball in assets/gdm_themes
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
+DM='gdm' # Default display manager
+BG='ubuntu-sky.jpg' # /usr/share/backgrounds/
+BGLOCK='cloud-flares.jpg' # /usr/share/gnome-shell/theme/
+BGLOGIN='cloud-flares.jpg' #
+THEME='Faience'
+ICONS='fs-icons-ubuntu' # icon theme to be used
+THEME='plymouth-theme-solar' # package name of plymouth splash screen
+
 
 PACKAGES=(
     "trash-cli"
@@ -28,17 +35,11 @@ PACKAGES=(
     "terminology"
     "slim"
     "faience-theme"
-    "plymouth-theme-paw-ubuntu"
+    "plymouth-theme-solar"
     "npm"
+    "docky"
+    "fs-icons"
 )
-
-# file name of background image to be used,
-# must be included in assets/backgrounds prior to execution
-# better remind them about that
-BG='ubuntu-sky.jpg'
-BGLOCK='cloud-flares.jpg'
-BGLOGIN='cloud-flares.jpg'
-THEME='Faience'
 
 # parent directory of ~/.ubuntu/scripts/vars </\--(YOU ARE HERE)
 # which after the two DIR=* lines should be: ~/.ubuntu

@@ -9,7 +9,17 @@ log_daemon_msg "Extracting assets and setting up Login screen  ..."
     sudo cp -n "$DIR/assets/background/$BGLOCK" /usr/share/gnome-shell/theme >> "$DIR/log/$LOGFILE"
     sudo chmod 744 "/usr/share/gnome-shell/theme/$BGLOCK" # permission: readable to all (rwx-r--r--)
 
-    dconf gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/$BG" >> "$DIR/log/$LOGFILE"
+    #copy assets to proper locations
+    sudo cp $DIR/assets/gdm_themes/nospeedlimit/chase.jpg /usr/share/backgrounds
+
+    # sets background iamge
+    gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/$BG" >> "$DIR/log/$LOGFILE"
+
+    # sets icon theme
+    gsettings set org.gnome.desktop.interface icon-theme "$ICONS" >> "$DIR/log/$LOGFILE"
+
+    # sets GTK theme
+    gsettings set org.gnome.desktop.interface gtk-theme "$THEME" >> "$DIR/log/$LOGFILE"
 
     ## Escape path for sed using bash find and replace 
     BGLOCK_E="${BGLOCK//\//\\/}"
@@ -31,19 +41,13 @@ log_daemon_msg "Extracting assets and setting up Login screen  ..."
     # extracts the login theme file
     # tar -zxf "$DIR/assets/gdm_themes/$THEMETAR" -C "$DIR/assets/gdm_themes" >> "DIR/log/$LOGFILE"
 
-    #copy assets to proper locations
-    # sudo cp $DIR/assets/gdm_themes/nospeedlimit/chase.jpg /usr/share/backgrounds
-
     # ensures .xinitrc file has been created
     # touch ~/.xinitrc > "$DIR/log/$LOGFILE"
 
     # adds necessary config to slim
     # echo "sessiondir /usr/share/xsessions" >> /etc/slim.conf
 
-    gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/$BG"
-    gsettings set org.gnome.desktop.interface gtk-theme "$THEME"
-
     # reconfigures gdm and allows to select display manager
-    sudo dpkg-reconfigure gdm
+    sudo dpkg-reconfigure $DM
 
 log_end_msg 0
