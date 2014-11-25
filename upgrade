@@ -1,3 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
-#   TODO: MOVE urls for submodules from ssh to https
+. ./scripts/vars
+
+for D in `find submodules -mindepth 1 -maxdepth 1 -type d`
+do
+    if [ -d "$DIR/log/$LOGFILE" ]; then
+        # REMV=$(dirname "$D")
+        REPLACE=''
+        # MODNAME="${D/$REMV/$REPLACE}"
+        MODNAME=$D
+
+        log_daemon_msg "Upgrading $MODNAME ..."
+        # cd $DIR/$D >> "$DIR/log/$LOGFILE"
+        # git pull >> "$DIR/log/$LOGFILE"
+        log_end_msg 0
+    fi
+
+done

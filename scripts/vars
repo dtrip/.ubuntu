@@ -12,25 +12,25 @@
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
 
-PACKAGES=(
-    'trash-cli'
-    'mutt'
-    'centerim'
-    'vim'
-    'git'
-    'tmux'
-    'multitail'
-    'ack-grep'
-    'nodejs'
-    'nodejs-legacy'
-    'zsh'
-    'tilda'
-    'terminology'
-    'slim'
-    'slidewall'
-    'compiz-plugins-livewallpapers'
-    'faience-theme'
-    )
+# PACKAGES=(
+#     "trash-cli"
+#     "mutt"
+#     "centerim"
+#     "vim"
+#     "git"
+#     "tmux"
+#     "multitail"
+#     "ack-grep"
+#     "nodejs"
+#     "nodejs-legacy"
+#     "zsh"
+#     "tilda"
+#     "terminology"
+#     "slim"
+#     "slidewall"
+#     "compiz-plugins-livewallpapers"
+#     "faience-theme"
+# )
 
 # file name of background image to be used,
 # must be included in assets/backgrounds prior to execution
