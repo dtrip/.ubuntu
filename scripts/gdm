@@ -37,16 +37,13 @@ log_daemon_msg "Extracting assets and setting up Login screen  ..."
     # ensures .xinitrc file has been created
     # touch ~/.xinitrc > "$DIR/log/$LOGFILE"
 
-    # reconfigures gdm and allows to select display manager
-    # sudo dpkg-reconfigure gdm
-
     # adds necessary config to slim
     # echo "sessiondir /usr/share/xsessions" >> /etc/slim.conf
 
-    # installs 
-    # su - gdm -s /bin/bash
-    # `dbus-launch | sed "s/^/export /"`
-    # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/FILE.JPG"
-    # GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.interface gtk-theme ""
+    gsettings set org.gnome.desktop.background picture-uri "file:///usr/share/backgrounds/$BG"
+    gsettings set org.gnome.desktop.interface gtk-theme "$THEME"
+
+    # reconfigures gdm and allows to select display manager
+    sudo dpkg-reconfigure gdm
 
 log_end_msg 0
