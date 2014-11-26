@@ -15,7 +15,7 @@ public class MainWindow : Window {
         this.destroy.connect(Gtk.main_quit);
 
         try {
-            window.icon = new Gdk.Pixbuf.from_file("../assets/imgs/config-icon.png");
+            this.icon = new Gdk.Pixbuf.from_file("./assets/imgs/config-icon.png");
         } catch (Error e) {
             stderr.printf("Error loading application icon %s\n", e.message);
         }

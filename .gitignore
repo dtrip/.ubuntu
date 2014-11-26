@@ -5,6 +5,7 @@
 
 # path to extracted theme
 assets/nospeedlimit/*
-
+build/*
+!build/__empty__
 log/*
 !log/__empty__

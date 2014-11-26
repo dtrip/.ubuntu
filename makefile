@@ -2,11 +2,14 @@
 # GNU Makefile
 
 COMPILER = valac
-VFLAGS = --pkg gtk+-3.0
-BUILDDIR = ../build
-OUTPUTFILE = Ubuntu Setup
+VFLAGS = --pkg gtk+-3.0 # -C to compile to .c
+BUILDDIR = build
+OUTPUTFILE = Ubuntu\ Setup
 
-SOURCES = src/*.vala
+SRC = src/*.vala
 
 all:
-	$(COMPILER) ${VFLAGS} -o $(OUTPUTFILE)
+		$(COMPILER) ${VFLAGS} -o $(BUILDDIR)/$(OUTPUTFILE) $(SRC)
+
+clean:
+	rm -f $(BUILDDIR)/$(OUTPUTFILE)
