@@ -1,32 +1,33 @@
 .ubuntu
 ======
-Ubuntu Automized Customization Settings: 
-    * Background
-        * Desktop
-        * Login
-        * Lock
-    * PPA's
-        * Terminology `ppa:hannes-janetzek/enlightenment-svn`
-        * TODO `ppa:noobslab/apps`
-        * faience-theme. `ppa:tiheum/equinox`
-        * fs-icons `ppa:noobslab/icons2`
-        * super-boot-manager `ppa:ingalex/super-boot-manager`
-    * `apt-get install` \[packages\]
-    * `apt-get update`
-    * `apt-get upgrade`
-    * Setup faience Gtk 3 theme
-    * `dpkg-reonfigure gdm`
-    * Plymouth Theme
-        * Downloads _solar_ theme
-    * docky
-    * .tmux
-    * .bashrc
-    * .vim
-    * zsh
-        * .zshrc submodule
-        * [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
-    * minor tweaks/bug fixes
-        * Google Chrome Icon
+Ubuntu Automized Customization Settings:
+
+ * Background
+     * Desktop
+     * Login
+     * Lock
+ * PPA's
+     * Terminology `ppa:hannes-janetzek/enlightenment-svn`
+     * TODO `ppa:noobslab/apps`
+     * faience-theme. `ppa:tiheum/equinox`
+     * fs-icons `ppa:noobslab/icons2`
+     * super-boot-manager `ppa:ingalex/super-boot-manager`
+ * `apt-get install` \[packages\]
+ * `apt-get update`
+ * `apt-get upgrade`
+ * Setup faience Gtk 3 theme
+ * `dpkg-reonfigure gdm`
+ * Plymouth Theme
+     * Downloads _solar_ theme
+ * docky
+ * .tmux
+ * .bashrc
+ * .vim
+ * zsh
+     * .zshrc submodule
+     * [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
+ * minor tweaks/bug fixes
+     * Google Chrome Icon
 
 Also provides automated upgrades and maintenace (
 
