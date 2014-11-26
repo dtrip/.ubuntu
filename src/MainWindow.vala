@@ -13,5 +13,11 @@ public class MainWindow : Window {
         this.set_default_size(500, 400);
 
         this.destroy.connect(Gtk.main_quit);
+
+        try {
+            window.icon = new Gdk.Pixbuf.from_file("../assets/imgs/config-icon.png");
+        } catch (Error e) {
+            stderr.printf("Error loading application icon %s\n", e.message);
+        }
     }
 }
