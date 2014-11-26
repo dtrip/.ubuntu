@@ -36,6 +36,7 @@ PPA=(
     'ppa:tiheum/equinox'
     'ppa:noobslab/icons2'
     'ppa:ingalex/super-boot-manager'
+    'add-apt-repository ppa:dockbar-main/ppa'
 )
 
 PACKAGES=(
