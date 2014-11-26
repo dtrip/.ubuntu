@@ -39,6 +39,8 @@ PACKAGES=(
     "npm"
     "docky"
     "fs-icons"
+    "gnome-do"
+    "gnome-do-plugins"
 )
 
 # parent directory of ~/.ubuntu/scripts/vars </\--(YOU ARE HERE)
