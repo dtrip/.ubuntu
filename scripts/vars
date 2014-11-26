@@ -8,6 +8,9 @@
 # and status_of_proc is working.
 . /lib/lsb/init-functions
 
+# Ubuntu's short release version name: trusty, utopic, etc..
+REL=$(lsb_release -cs)
+
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
 DM='gdm' # Default display manager
@@ -18,6 +21,22 @@ THEME='Faience'
 ICONS='fs-icons-ubuntu' # icon theme to be used
 THEME='plymouth-theme-solar' # package name of plymouth splash screen
 
+# PPA array to app-add-repository
+#
+# * Terminology.........ppa:hannes-janetzek/enlightenment-svn
+# * TODO ...............ppa:noobslab/apps
+# * faience-theme.......ppa:tiheum/equinox
+# * fs-icons............ppa:noobslab/icons2
+# * super-boot-manager..ppa:ingalex/super-boot-manager
+
+
+PPA=(
+    'ppa:hannes-janetzek/enlightenment-svn'
+    'ppa:noobslab/apps'
+    'ppa:tiheum/equinox'
+    'ppa:noobslab/icons2'
+    'ppa:ingalex/super-boot-manager'
+)
 
 PACKAGES=(
     "trash-cli"
@@ -43,13 +62,20 @@ PACKAGES=(
     "gnome-do-plugins"
 )
 
+
+# Source List additions
+#
+
+SRCLIST=(
+    "deb http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main"
+    "deb-src http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main"
+    "deb http://dl.google.com/linux/chrome/deb/ stable main"
+)
+
 # parent directory of ~/.ubuntu/scripts/vars </\--(YOU ARE HERE)
 # which after the two DIR=* lines should be: ~/.ubuntu
 DIR=$(dirname $(readlink -e $0))
 DIR=$(dirname $(readlink -e $DIR))
-
-# Ubuntu's short release version name: trusty, utopic, etc..
-REL=$(lsb_release -cs)
 
 # join array function
 function join { local IFS="$1"; shift; echo "$*"; }

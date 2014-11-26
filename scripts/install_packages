@@ -8,24 +8,18 @@ log_daemon_msg "Installing packages ..."
     # adds google linux repo
     wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 
-    # ppa for terminology
-    sudo add-apt-repository -y ppa:hannes-janetzek/enlightenment-svn >> "$DIR/log/$LOGFILE"
+    # adds each PPA in PPA array var
+    for P in PPA
+    do
+        # Adds PPA
+        sudo add-apt-repository -y "$P" >> "$DIR/log/$LOGFILE"
+    done
 
-    # TODO ppa for?
-    sudo add-apt-repository -y ppa:noobslab/apps >> "$DIR/log/$LOGFILE"
-
-    # ppa for faience-theme
-    sudo add-apt-repository -y ppa:tiheum/equinox >> "$DIR/log/$LOGFILE"
-
-    #fs-icons theme
-    sudo add-apt-repository -y ppa:noobslab/icons2 >> "$DIR/log/$LOGFILE"
-
-    # addeds sources for docky
-    echo "deb http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
-    echo "deb-src http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main" >> /etc/apt/sources.list
-
-    # adds repo for google chrome
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+    # addds additional repos
+    for src in SRCLIST
+    do
+        echo "$src" >> /etc/apt/sources.list
+    done
 
     # updates apt
     sudo apt-get -y update >> "$DIR/log/$LOGFILE"

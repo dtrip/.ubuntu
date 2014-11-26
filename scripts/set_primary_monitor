@@ -1,4 +1,7 @@
 #!/bin/bash
+
+. ./scripts/vars
+
 # use this for a startup script to set primary monitor
 #
 # xrandr --query
@@ -7,3 +10,18 @@
 # Note: You can permanently set this in ~/.config/monitors.xml
 
 xrandr --output HDMI1 --primary > /dev/null
+
+if hash docky 2> /dev/null; then
+    printf "\nRestart Docky? [Y/n]: "
+
+    read DOCKY
+
+    DOCKY=$(echo $DOCKY | tr 'a-z' 'A-Z')
+
+    if [ "$DOCKY" = 'Y' ] || [ "$DOCKY" = 'YES' ] || [ -z $DOCKY ]; then
+        pkill docky >> "$DIR/log/$LOGFILE"
+        docky > /dev/null &
+        # docky > /dev/null
+    fi
+fi
+
