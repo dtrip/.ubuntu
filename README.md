@@ -16,7 +16,7 @@ Ubuntu Automized Customization Settings:
  * `apt-get update`
  * `apt-get upgrade`
  * Setup faience Gtk 3 theme
- * `dpkg-reonfigure gdm`
+ * `dpkg-reconfigure gdm`
  * Plymouth Theme
      * Downloads _solar_ theme
  * docky
