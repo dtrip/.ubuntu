@@ -12,16 +12,9 @@
 xrandr --output HDMI1 --primary > /dev/null
 
 if hash docky 2> /dev/null; then
-    printf "\nRestart Docky? [Y/n]: "
-
-    read DOCKY
-
     DOCKY=$(echo $DOCKY | tr 'a-z' 'A-Z')
 
-    if [ "$DOCKY" = 'Y' ] || [ "$DOCKY" = 'YES' ] || [ -z $DOCKY ]; then
-        pkill docky >> "$DIR/log/$LOGFILE"
-        docky > /dev/null &
-        # docky > /dev/null
-    fi
+    pkill docky >> "$DIR/log/$LOGFILE"
+    docky > /dev/null &
 fi
 
