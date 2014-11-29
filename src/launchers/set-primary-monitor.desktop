@@ -1,10 +1,10 @@
 [Desktop Entry]
 Type=Application
 Encoding=UTF-8
-Name=Set Primary Montior
+Name=Set Primary Monitor
 Comment=Changes primary monitor from integrated to external HDMI
 Exec=~/.ubuntu/scripts/set_primary_monitor
-Icon=~/.ubuntu/assets/imgs/config-icon.png
+Icon=~/.ubuntu/assets/imgs/desktop-config-icon.png
 X-GNOME-Settings-Panel=Set Primary Monitor
 Categories=System
-Terminal=true
+Terminal=false

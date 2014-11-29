@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=0.0.0
 Type=Application
-Name=Set Primary Desktop
+Name=Ubuntu Setup
 Comment=Automated Desktop Customization Setup
 Exec=~/.ubuntu/build/Ubuntu\ Setup
 Icon=~/.ubuntu/imgs/config-icon.png

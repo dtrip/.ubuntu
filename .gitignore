@@ -2,6 +2,7 @@
 *.swp
 *.swo
 *.log
+*~
 
 # path to extracted theme
 assets/nospeedlimit/*

@@ -9,7 +9,7 @@
 #
 # Note: You can permanently set this in ~/.config/monitors.xml
 
-xrandr --output HDMI1 --primary > /dev/null
+xrandr --output HDMI1 --primary >> "$DIR/log/$LOGFILE"
 
 if hash docky 2> /dev/null; then
     DOCKY=$(echo $DOCKY | tr 'a-z' 'A-Z')
