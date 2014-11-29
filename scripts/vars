@@ -36,31 +36,33 @@ PPA=(
     'ppa:tiheum/equinox'
     'ppa:noobslab/icons2'
     'ppa:ingalex/super-boot-manager'
-    'add-apt-repository ppa:dockbar-main/ppa'
+    'ppa:dockbar-main/ppa'
+    'ppa:teejee2008/ppa'
 )
 
 PACKAGES=(
-    "trash-cli"
-    "mutt"
-    "centerim"
-    "vim"
-    "git"
-    "tmux"
-    "multitail"
-    "ack-grep"
-    "nodejs"
-    "nodejs-legacy"
-    "zsh"
-    "tilda"
-    "terminology"
-    "slim"
-    "faience-theme"
-    "plymouth-theme-solar"
-    "npm"
-    "docky"
-    "fs-icons"
-    "gnome-do"
-    "gnome-do-plugins"
+    'trash-cli'
+    'mutt'
+    'centerim'
+    'vim'
+    'git'
+    'tmux'
+    'multitail'
+    'ack-grep'
+    'nodejs'
+    'nodejs-legacy'
+    'zsh'
+    'tilda'
+    'terminology'
+    'slim'
+    'faience-theme'
+    'plymouth-theme-solar'
+    'npm'
+    'docky'
+    'fs-icons'
+    'gnome-do'
+    'gnome-do-plugins'
+    'conky-manager'
 )
 
 
