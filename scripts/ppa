@@ -1,0 +1,74 @@
+#!/bin/bash
+
+# wrapper for apt-get for adding, removing and purging PPA's
+
+. ./scripts/vars
+
+addPPA () {
+
+    log_daemon_msg "Adding PPA add updating apt-get ..."
+
+    # ppa address was not passed
+    if [ -z $1 ]; then
+        echo "Error: No PPA URL"
+        log_end_msg 1
+        exit 1
+    fi
+
+    # appends ppa address to log file
+    echo "$1" >> "$DIR/log/$PPAFILE"
+
+    sudo sudo add-apt-repository -y $1 >> "$DIR/log/$LOGFILE"
+    sudo apt-get -y update >> "$DIR/log/$LOGFILE"
+    exit 0
+}
+
+removePPA () {
+
+    log_daemon_msg "Removing PPA"
+    sudo sudo add-apt-repository -r -y $1 >> "$DIR/log/$LOGFILE"
+    sudo apt-get -y update >> "$DIR/log/$LOGFILE"
+
+    # removes PPA from PPA list in log dir
+    sed -i 's/$1//' "$DIR/log/$PPAFILE" >> "$DIR/log/$LOGFILE"
+
+    log_end_msg 0
+    exit 0
+}
+
+purgePPA () {
+
+    log_daemon_msg "Purging PPA"
+
+    if hash ppa-purge 2> /dev/null;
+    then
+        sudo ppa-purge "$1" >> "$DIR/log/$LOGFILE"
+        sudo apt-get -y update >> "$DIR/log/$LOGFILE"
+
+        # removes PPA from PPA list in log dir
+        sed -i 's/$1//' "$DIR/log/$PPAFILE" >> "$DIR/log/$LOGFILE"
+
+        log_end_msg 0
+        exit 0
+    else
+        # ppa-purge is not installed
+        log_end_msg 1
+        exit 1
+    fi
+}
+
+
+case "$1" in
+    add)
+        addPPA $2
+        ;;
+    remove)
+        removePPA
+        ;;
+    purge)
+        purgePPA
+        ;;
+    *)
+        echo "Usage: ppa {add|remove|purge} [ppa:]" >&2
+        ;;
+esac

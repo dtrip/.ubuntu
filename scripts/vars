@@ -13,6 +13,7 @@ REL=$(lsb_release -cs)
 
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
+PPAFILE='ppa.log'
 DM='gdm' # Default display manager
 BG='ubuntu-sky.jpg' # /usr/share/backgrounds/
 BGLOCK='cloud-flares.jpg' # /usr/share/gnome-shell/theme/
