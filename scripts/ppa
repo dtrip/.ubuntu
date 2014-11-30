@@ -63,12 +63,12 @@ case "$1" in
         addPPA $2
         ;;
     remove)
-        removePPA
+        removePPA $2
         ;;
     purge)
-        purgePPA
+        purgePPA $2
         ;;
     *)
-        echo "Usage: ppa {add|remove|purge} [ppa:]" >&2
+        echo "Usage: ppa {add|remove|purge|install|uninstall} [ppa:]" >&2
         ;;
 esac
