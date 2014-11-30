@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. ./scripts/vars
+
+if [ "$DESKTOP_SESSION" = 'openbox' ];
+then
+    . $DIR/scripts/openbox_compositing
+fi
