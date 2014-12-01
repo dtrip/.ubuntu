@@ -11,6 +11,9 @@
 # Ubuntu's short release version name: trusty, utopic, etc..
 REL=$(lsb_release -cs)
 
+# Ubuntu's version number: 14.04, 14.10, 15.04 etc.
+VER=$(lsb_release -sr)
+
 THEMETAR='42735-nospeedlimit.tar.gz'
 LOGFILE='install.log'
 PPAFILE='ppa.log'

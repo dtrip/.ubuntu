@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Ubuntu Start
+Comment=Openbox start menu hack button
+X-GNOME-FullName=Ubuntu Start
+Exec=xdotool key super+space
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=mousepad
+Categories=Menu;
+MimeType=
+StartupNotify=true
