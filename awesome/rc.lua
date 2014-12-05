@@ -2,6 +2,7 @@
 --
 -- file locate in Ubuntu 14.04: /etc/xdg/awesome/rc.lua
 --
+require("volume")
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
@@ -14,7 +15,7 @@ require("naughty")
 require("debian.menu")
 
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
-awful.util.spawn_with_shell("echo \"pointer = 1 2 3 5 4 7 6 8 9 10 11 12\" > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
+awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
