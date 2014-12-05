@@ -1,4 +1,7 @@
 -- Standard awesome library
+--
+-- file locate in Ubuntu 14.04: /etc/xdg/awesome/rc.lua
+--
 require("awful")
 require("awful.autofocus")
 require("awful.rules")
@@ -45,6 +48,8 @@ beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
 chrome = "google-chrome"
+firefox = "firefox"
+nemo = "nemo --no-desktop"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -93,8 +98,10 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "Google Chrome", chrome },
                                     { "Terminal", terminal },
-                                    { "Google Chrome", chrome }
+                                    { "Files", nemo },
+                                    { "Firefox", firefox }
                                   }
                         })
 
