@@ -101,7 +101,7 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
-                                    { "Google Chrome", chrome },
+                                    { "Chrome", chrome },
                                     { "Terminal", terminal },
                                     { "Files", nemo },
                                     { "Firefox", firefox }
@@ -271,7 +271,9 @@ globalkeys = awful.util.table.join(
 
     -- Brightness
     awful.key({ modkey,           }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
-    awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end)
+    awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
+
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
 )
 
 clientkeys = awful.util.table.join(

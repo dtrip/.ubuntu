@@ -63,9 +63,9 @@ PACKAGES=(
     'plymouth-theme-solar'
     'npm'
     'docky'
+    'awesome'
+    'awesome-extra'
     'fs-icons'
-    'gnome-do'
-    'gnome-do-plugins'
     'conky-manager'
 )
 
@@ -79,8 +79,8 @@ SRCLIST=(
     "deb http://dl.google.com/linux/chrome/deb/ stable main"
 )
 
-# parent directory of ~/.ubuntu/scripts/vars </\--(YOU ARE HERE)
-# which after the two DIR=* lines should be: ~/.ubuntu
+# parent directory of /path/to/.ubuntu/scripts/vars </\--(YOU ARE HERE)
+# which after the two DIR=* lines should be: /path/to/.ubuntu
 DIR=$(dirname $(readlink -e $0))
 DIR=$(dirname $(readlink -e $DIR))
 

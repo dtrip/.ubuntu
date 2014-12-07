@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 xrandr --addmode eDP1 1366x768
 xrandr --addmode HDMI1 1920x1080
@@ -8,7 +8,8 @@ xrandr --addmode HDMI1 1920x1080
 xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of eDP1
 
 #exec openbox-session
-exec awesome
+
+exec awesome &
 # exec dwm
 
 # enables natural scrolling (replace 5 with 4 and 7 with 6 to revert)
