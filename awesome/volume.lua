@@ -1,4 +1,4 @@
-volum_widget = widget({ type = "textbox", name = "tb_volume", align = "right" })
+volume_widget = widget({ type = "textbox", name = "tb_volume", align = "right" })
 
 function update_volume(widget)
     local fd = io.popen("amixer sget Master")
@@ -29,4 +29,5 @@ function update_volume(widget)
 end
 
 update_volume(volume_widget)
+
 awful.hooks.timer.register(1, function () update_volume(volume_widget) end)

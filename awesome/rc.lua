@@ -12,10 +12,15 @@ require("naughty")
 
 -- Load Debian menu entries
 require("debian.menu")
+require("conky")
+
+require("awful.remote")
+require("screenful")
 
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
--- awful.util.spawn_with_shell("conky &")
+awful.util.spawn_with_shell("xscreensaver -nosplash &")
+-- awful.util.spawn_with_shell("sh /home/wgallios/.conky/conky-startup.sh &")
 -- awful.util.spawn_with_shell("guake &")
 
 
@@ -47,6 +52,7 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+-- beautiful.init("/home/wgallios/.config/awesome/themes/powerarrow/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -273,7 +279,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
     awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
 
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({                   }, "F10", function() toggle_conky() end)
 )
 
 clientkeys = awful.util.table.join(
@@ -363,6 +370,15 @@ awful.rules.rules = {
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
+    --
+    { rule = { class = "Conky" },
+      properties = {
+          floating = true,
+          sticky = true,
+          ontop = false,
+          focusable = false,
+          size_hints = {"program_position", "program_size"}
+    } }
 }
 -- }}}
 
