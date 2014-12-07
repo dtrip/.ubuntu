@@ -16,6 +16,7 @@ require("conky")
 
 require("awful.remote")
 require("screenful")
+require("volume")
 
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
@@ -199,6 +200,7 @@ for s = 1, screen.count() do
             mypromptbox[s],
             layout = awful.widget.layout.horizontal.leftright
         },
+        volume_widget,
         mylayoutbox[s],
         mytextclock,
         s == 1 and mysystray or nil,
@@ -280,7 +282,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
 
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
-    awful.key({                   }, "F10", function() toggle_conky() end)
+    awful.key({                   }, "F10", function() toggle_conky() end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-", false) end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end)
 )
 
 clientkeys = awful.util.table.join(
