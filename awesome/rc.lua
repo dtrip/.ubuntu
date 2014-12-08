@@ -1,5 +1,5 @@
 -- Standard awesome library
-require("volume")
+-- require("volume")
 local gears = require("gears")
 local awful = require("awful")
 awful.rules = require("awful.rules")
@@ -18,6 +18,8 @@ require("debian.menu")
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
+awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -46,7 +48,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+-- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init("~/.config/awesome/themes/powerarrow-darker/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -206,7 +209,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(volume_widget)
+    -- right_layout:add(volume_widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -293,11 +296,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
     awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
 
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
     -- awful.key({                   }, "F10", function() toggle_conky() end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end)
+    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+", false) end),
+    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-", false) end),
+    -- awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end)
 
 )
 
