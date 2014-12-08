@@ -1,0 +1,11 @@
+#!/bin/bash
+. ./scripts/vars
+
+log_daemon_msg "Adding fonts..."
+    mkdir -p ~/.fonts >> "$DIR/log/$LOGFILE"
+    cp -rf "$DIR/fonts/*" ~/.fonts
+    fc-cache -f -v
+log_end_msg 0
+
+
+
