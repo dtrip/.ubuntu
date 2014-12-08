@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+local battery = require("battery")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -52,7 +53,7 @@ end
 beautiful.init("~/.config/awesome/themes/powerarrow-darker/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "x-terminal-emulator"
+terminal = "terminator"
 chrome = "google-chrome"
 firefox = "firefox"
 nemo = "nemo --no-desktop"
@@ -104,13 +105,13 @@ end
 -- {{{ Menu
 -- Create a laucher widget and a main menu
 myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "Manual", terminal .. " -e man awesome" },
+   { "Edit Config", editor_cmd .. " " .. awesome.conffile },
+   { "Reload Awesome", awesome.restart },
+   { "Log Out", awesome.quit }
 }
 
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
+mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Chrome", chrome },
                                     { "Terminal", terminal },
@@ -129,6 +130,15 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
+
+-- creates a battery indicator widget
+batterywidget = wibox.widget.textbox()
+
+batterywidget_timer = timer({timeout = 1})
+batterywidget_timer:connect_signal("timeout", function()
+    batterywidget:set_text(batteryInfo("BAT0"))
+end)
+batterywidget_timer:start()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -208,6 +218,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(batterywidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     -- right_layout:add(volume_widget)
     right_layout:add(mytextclock)
