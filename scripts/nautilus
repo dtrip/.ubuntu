@@ -1,0 +1,6 @@
+#!/bin/bash
+. ./scripts/vars
+
+log_daemon_msg "Updating nautilus ..."
+    gconftool-2 –type bool –set /apps/nautilus/preferences/show_desktop false
+log_end_msg 0

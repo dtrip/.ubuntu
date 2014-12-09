@@ -12,6 +12,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local battery = require("battery")
+local vicious = require("vicious")
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -21,6 +22,8 @@ awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xm
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
 awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
+sep = wibox.widget.textbox()
+sep:set_text(' /  ')
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -140,6 +143,30 @@ batterywidget_timer:connect_signal("timeout", function()
 end)
 batterywidget_timer:start()
 
+-- CPU Widget
+cpuwidget = wibox.widget.textbox()
+vicious.register(cpuwidget, vicious.widgets.cpu, "CPU:$1% ")
+
+--  Memory Widget
+memwidget = wibox.widget.textbox()
+vicious.register(memwidget, vicious.widgets.mem, "MEM:$1% ($2MB) ", 13)
+
+--  Date widget
+datewidget = wibox.widget.textbox()
+vicious.register(datewidget, vicious.widgets.date, "%b %d,%l:%M %p ", 60)
+
+-- wifi
+wifiwidget = wibox.widget.textbox()
+vicious.register(wifiwidget, vicious.widgets.wifi, "${ssid} ${linp}%", 3, 'wlan0')
+
+--Volume Widget
+volwidget = wibox.widget.textbox()
+vicious.register(volwidget, vicious.widgets.volume,
+function(widget, args)
+    local label = { ["♫"] = "O", ["♩"] = "M" }
+    return "♫" .. args[1]
+end, 2, "PCM")
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -218,10 +245,21 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+    right_layout:add(sep)
+    right_layout:add(volwidget)
+    right_layout:add(sep)
     right_layout:add(batterywidget)
+    right_layout:add(sep)
+    right_layout:add(cpuwidget)
+    right_layout:add(sep)
+    right_layout:add(memwidget)
+    right_layout:add(sep)
+    right_layout:add(wifiwidget)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     -- right_layout:add(volume_widget)
-    right_layout:add(mytextclock)
+    -- right_layout:add(mytextclock)
+    right_layout:add(sep)
+    right_layout:add(datewidget)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
