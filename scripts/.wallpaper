@@ -3,11 +3,7 @@
 
 killall mplayer > /dev/null
 
-# LEFT="~/Videos/massEffect3Wallpaper.mp4"
-# RIGHT="~/Videos/massEffect3Wallpaper.mp4"
-
-XFLAGS="-ni -fs -nf -o 0.5 -ov"
+XFLAGS="-ni -fs -nf -ov"
 MFLAGS="-wid WID -quiet -loop 2 -geometry 0:0 -noconsolecontrols"
 
-xwinwrap -g 1920x1080+683+0 $XFLAGS -- mplayer $MFLAGS ~/Videos/massEffect3Wallpaper.mp4 &
-xwinwrap -g 1366x768+-500+0 $XFLAGS -- mplayer $MFLAGS ~/Videos/massEffect3Wallpaper.mp4 &
+xwinwrap $XFLAGS -- mplayer $MFLAGS ~/Videos/massEffect3Wallpaper.mp4 &
