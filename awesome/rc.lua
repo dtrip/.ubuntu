@@ -26,7 +26,9 @@ awful.util.spawn_with_shell("xscreensaver -nosplash &")
 -- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
 sep = wibox.widget.textbox()
+spacer = wibox.widget.textbox()
 sep:set_text(' /  ')
+spacer:set_text(' ')
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -135,7 +137,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    { "Debian", debian.menu.Debian_menu.Debian, beautiful.debian },
                                     { "Chrome", chrome, beautiful.chrome },
                                     { "Terminal", terminal, beautiful.terminal },
                                     { "Files", fileman, beautiful.files },
@@ -269,6 +271,15 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+
+    if s == 1 then
+
+        right_layout:add(arrl)
+        right_layout:add(spacer)
+        right_layout:add(wibox.widget.systray())
+        right_layout:add(spacer)
+    end
+
     right_layout:add(arrl_ld)
     right_layout:add(volicon)
     right_layout:add(bvol)
@@ -295,14 +306,10 @@ for s = 1, screen.count() do
     right_layout:add(netwidget)
     right_layout:add(arrl_dl)
 
-    if s == 1 then
-
-        right_layout:add(arrl_ld)
-        right_layout:add(wibox.widget.systray())
-        right_layout:add(arrl_dl)
-    end
     -- right_layout:add(volume_widget)
     -- right_layout:add(mytextclock)
+    --
+    right_layout:add(spacer)
     right_layout:add(datewidget)
     -- right_layout:add(calw)
     right_layout:add(arrl_ld)

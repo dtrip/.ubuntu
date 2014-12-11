@@ -16,7 +16,7 @@ cpu_graphs = {}
 for i=1,CORES do
     cpu_graphs[i] = blingbling.progress_graph(cpu_conf)
 
-    -- blingbling.popups.htop(cpu_graphs[i], { terminal = terminal })
+    blingbling.popups.htop(cpu_graphs[i], { terminal = terminal })
 
     vicious.register(cpu_graphs[i], vicious.widgets.cpu, "$"..(i+1).."",1)
 end
