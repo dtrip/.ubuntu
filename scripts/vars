@@ -45,6 +45,12 @@ PPA=(
     'ppa:webupd8team/java'
 )
 
+# GIT repos to clone
+#   TODO associated arrays for path
+GIT= (
+    'git://git.naquadah.org/oocairo.git'
+)
+
 PACKAGES=(
     'trash-cli'
     'mutt'

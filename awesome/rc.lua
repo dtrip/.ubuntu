@@ -7,12 +7,16 @@ require("awful.autofocus")
 -- Widget and layout library
 local wibox = require("wibox")
 -- Theme handling library
-local beautiful = require("beautiful")
+beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
 -- local battery = require("battery")
 local vicious = require("vicious")
+blingbling = require("blingbling")
+
+-- Number of CPU cores
+CORES = 4
 
 -- Load Debian menu entries
 require("debian.menu")
@@ -55,6 +59,10 @@ end
 -- Themes define colours, icons, font and wallpapers.
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 beautiful.init("~/.config/awesome/themes/powerarrow-darker/theme.lua")
+
+-- requires after theme has been loaded
+require("cpu")
+require("net")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
@@ -182,7 +190,7 @@ cpuicon = wibox.widget.imagebox()
 cpuwidget:set_widget(cpuwidget_txt)
 cpuwidget:set_bg(beautiful.bg_focus)
 cpuicon:set_image(beautiful.widget_cpu)
-vicious.register(cpuwidget_txt, vicious.widgets.cpu, "$1% ")
+vicious.register(cpuwidget_txt, vicious.widgets.cpu, "")
 
 --  Memory Widget
 memwidget = wibox.widget.textbox()
@@ -205,22 +213,31 @@ wifiwidget:set_bg(beautiful.bg_focus)
 vicious.register(wifiwidget_txt, vicious.widgets.wifi, "${ssid} ${linp}%", 3, 'wlan0')
 
 --Volume Widget
-volwidget_txt = wibox.widget.textbox()
-volwidget = wibox.widget.background()
+-- volwidget_txt = wibox.widget.textbox()
+-- volwidget = wibox.widget.background()
 
 volicon_img = wibox.widget.imagebox()
 volicon = wibox.widget.background()
-volicon_img:set_image(beautiful.widget_vol)
+volicon_img:set_image(beautiful.widget_vol_mute)
 volicon:set_widget(volicon_img)
 volicon:set_bg(beautiful.bg_focus)
 
-volwidget:set_widget(volwidget_txt)
-volwidget:set_bg(beautiful.bg_focus)
-vicious.register(volwidget_txt, vicious.widgets.volume,
-function(widget, args)
-    local label = { ["♫"] = "O", ["♩"] = "M" }
-    return args[1] .. "% " .. label[args[2]]
-end, 2, "PCM")
+-- volwidget:set_widget(volwidget_txt)
+-- volwidget:set_bg(beautiful.bg_focus)
+-- vicious.register(volwidget_txt, vicious.widgets.volume,
+-- function(widget, args)
+--     local label = { ["♫"] = "O", ["♩"] = "M" }
+--     return args[1] .. "% " .. label[args[2]]
+-- end, 2, "PCM")
+
+-- bling bling volume widget
+bvol = blingbling.volume.new()
+bvol:set_height(16)
+bvol:set_width(30)
+bvol:set_background_color(beautiful.bg_focus)
+-- bvol:update_master()
+bvol:set_master_control()
+bvol:set_bar(true)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -302,12 +319,19 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     right_layout:add(arrl_ld)
     right_layout:add(volicon)
-    right_layout:add(volwidget)
+    right_layout:add(bvol)
+    -- right_layout:add(volwidget)
     right_layout:add(arrl_dl)
     right_layout:add(baticon)
     right_layout:add(batwidget)
     right_layout:add(arrl_ld)
     right_layout:add(cpuicon)
+
+    for i=1,CORES do
+        right_layout:add(cpu_graphs[i])
+    end
+
+
     right_layout:add(cpuwidget)
     right_layout:add(arrl_dl)
     right_layout:add(memicon)
