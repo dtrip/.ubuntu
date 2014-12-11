@@ -19,6 +19,3 @@
 [submodule "rainbow.sh"]
 	path = submodules/rainbow.sh
 	url = git@github.com:wgallios/rainbow.sh.git
-[submodule "awesome/batteryinfo"]
-	path = awesome/batteryinfo
-	url = git@github.com:wgallios/awesome-batteryInfo.git

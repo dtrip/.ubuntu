@@ -1,11 +1,12 @@
-#/bin/bash
+#!/bin/bash
 
 xrandr --addmode eDP1 1366x768
 xrandr --addmode HDMI1 1920x1080
 
 # xrandr --output HDMI1  --mode 1920x1080
 
-xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of eDP1
+# xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of eDP1
+xrandr --output eDP1 --mode 1366x768 --pos 0x462 --output HDMI1 --mode 1920x1080 --pos 1366x0
 
 #exec openbox-session
 
