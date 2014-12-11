@@ -11,7 +11,7 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
-local battery = require("battery")
+-- local battery = require("battery")
 local vicious = require("vicious")
 
 -- Load Debian menu entries
@@ -20,7 +20,8 @@ require("debian.menu")
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
-awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
+awful.util.spawn_with_shell("sh ~/.wallpaper &")
+-- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
 sep = wibox.widget.textbox()
 sep:set_text(' /  ')
@@ -59,7 +60,8 @@ beautiful.init("~/.config/awesome/themes/powerarrow-darker/theme.lua")
 terminal = "terminator"
 chrome = "google-chrome"
 firefox = "firefox"
-nemo = "nemo --no-desktop"
+-- nemo = "nemo --no-desktop"
+fileman = 'thunar'
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -101,7 +103,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[1])
+    tags[s] = awful.tag({ 'Term', 'Web', 'Gimp', 4, 5, 6, 7, 8, 9 }, s, layouts[1])
 end
 -- }}}
 
@@ -118,7 +120,7 @@ mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesom
                                     { "Debian", debian.menu.Debian_menu.Debian },
                                     { "Chrome", chrome },
                                     { "Terminal", terminal },
-                                    { "Files", nemo },
+                                    { "Files", fileman },
                                     { "Firefox", firefox }
                                   }
                         })
@@ -130,41 +132,94 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
+-- {{{ Arrows
+    arrl = wibox.widget.imagebox()
+    arrl:set_image(beautiful.arrl)
+
+    arrl_dl = wibox.widget.imagebox()
+    arrl_dl:set_image(beautiful.arrl_dl)
+
+    arrl_ld = wibox.widget.imagebox()
+    arrl_ld:set_image(beautiful.arrl_ld)
+
+    arrl_ld_sf = wibox.widget.imagebox()
+    arrl_ld_sf:set_image(beautiful.arrl_ld_sf)
+-- }}}
+
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
 -- creates a battery indicator widget
-batterywidget = wibox.widget.textbox()
+-- batterywidget = wibox.widget.textbox()
 
-batterywidget_timer = timer({timeout = 1})
-batterywidget_timer:connect_signal("timeout", function()
-    batterywidget:set_text(batteryInfo("BAT0"))
-end)
-batterywidget_timer:start()
+batwidget = awful.widget.progressbar()
+batwidget:set_width(8)
+batwidget:set_height(8)
+batwidget:set_vertical(true)
+batwidget:set_background_color(beautiful.bg_normal)
+batwidget:set_border_color(beautiful.bg_normal)
+batwidget:set_color({ type = "linear", from = { 0, 0 }, to = { 0, 8 }, stops = { { 0, "#AECF96" }, { 0.5, "#88A175" }, { 1, "#FF5656" }}})
+-- batwidget:set_color('#FF0000')
+vicious.register(batwidget, vicious.widgets.bat, "$2", 61, "BAT0")
+
+-- battery icon
+baticon = wibox.widget.imagebox()
+baticon:set_image(beautiful.widget_battery)
+
+
+-- batterywidget_timer = timer({timeout = 1})
+-- batterywidget_timer:connect_signal("timeout", function()
+    -- batterywidget:set_text(batteryInfo("BAT0"))
+-- end)
+-- batterywidget_timer:start()
 
 -- CPU Widget
-cpuwidget = wibox.widget.textbox()
-vicious.register(cpuwidget, vicious.widgets.cpu, "CPU:$1% ")
+cpuwidget_txt = wibox.widget.textbox()
+cpuwidget = wibox.widget.background()
+cpuicon = wibox.widget.imagebox()
+
+cpuwidget:set_widget(cpuwidget_txt)
+cpuwidget:set_bg(beautiful.bg_focus)
+cpuicon:set_image(beautiful.widget_cpu)
+vicious.register(cpuwidget_txt, vicious.widgets.cpu, "$1% ")
 
 --  Memory Widget
 memwidget = wibox.widget.textbox()
-vicious.register(memwidget, vicious.widgets.mem, "MEM:$1% ($2MB) ", 13)
+memicon = wibox.widget.imagebox()
+memicon:set_image(beautiful.widget_mem)
+vicious.register(memwidget, vicious.widgets.mem, "$1% $2MB ", 13)
 
 --  Date widget
 datewidget = wibox.widget.textbox()
 vicious.register(datewidget, vicious.widgets.date, "%b %d,%l:%M %p ", 60)
 
 -- wifi
-wifiwidget = wibox.widget.textbox()
-vicious.register(wifiwidget, vicious.widgets.wifi, "${ssid} ${linp}%", 3, 'wlan0')
+neticon = wibox.widget.imagebox()
+neticon:set_image(beautiful.widget_net)
+
+wifiwidget_txt = wibox.widget.textbox()
+wifiwidget = wibox.widget.background()
+wifiwidget:set_widget(wifiwidget_txt)
+wifiwidget:set_bg(beautiful.bg_focus)
+vicious.register(wifiwidget_txt, vicious.widgets.wifi, "${ssid} ${linp}%", 3, 'wlan0')
 
 --Volume Widget
-volwidget = wibox.widget.textbox()
-vicious.register(volwidget, vicious.widgets.volume,
+volwidget_txt = wibox.widget.textbox()
+volwidget = wibox.widget.background()
+
+volicon_img = wibox.widget.imagebox()
+volicon = wibox.widget.background()
+volicon_img:set_image(beautiful.widget_vol)
+volicon:set_widget(volicon_img)
+volicon:set_bg(beautiful.bg_focus)
+
+volwidget:set_widget(volwidget_txt)
+volwidget:set_bg(beautiful.bg_focus)
+vicious.register(volwidget_txt, vicious.widgets.volume,
 function(widget, args)
     local label = { ["♫"] = "O", ["♩"] = "M" }
-    return "♫" .. args[1]
+    return args[1] .. "% " .. label[args[2]]
 end, 2, "PCM")
 
 -- Create a wibox for each screen and add it
@@ -245,21 +300,33 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
-    right_layout:add(sep)
+    right_layout:add(arrl_ld)
+    right_layout:add(volicon)
     right_layout:add(volwidget)
-    right_layout:add(sep)
-    right_layout:add(batterywidget)
-    right_layout:add(sep)
+    right_layout:add(arrl_dl)
+    right_layout:add(baticon)
+    right_layout:add(batwidget)
+    right_layout:add(arrl_ld)
+    right_layout:add(cpuicon)
     right_layout:add(cpuwidget)
-    right_layout:add(sep)
+    right_layout:add(arrl_dl)
+    right_layout:add(memicon)
     right_layout:add(memwidget)
-    right_layout:add(sep)
+    right_layout:add(arrl_ld)
+    right_layout:add(neticon)
     right_layout:add(wifiwidget)
-    if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(arrl_dl)
+
+    if s == 1 then
+
+        right_layout:add(arrl_ld)
+        right_layout:add(wibox.widget.systray())
+        right_layout:add(arrl_dl)
+    end
     -- right_layout:add(volume_widget)
     -- right_layout:add(mytextclock)
-    right_layout:add(sep)
     right_layout:add(datewidget)
+    right_layout:add(arrl_ld)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
@@ -342,8 +409,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Brightness
-    awful.key({ modkey,           }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
-    awful.key({ modkey,           }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
+    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
+    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
 
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
     -- awful.key({                   }, "F10", function() toggle_conky() end),

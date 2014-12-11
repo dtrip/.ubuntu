@@ -42,6 +42,7 @@ PPA=(
     'ppa:ingalex/super-boot-manager'
     'ppa:dockbar-main/ppa'
     'ppa:teejee2008/ppa'
+    'ppa:webupd8team/java'
 )
 
 PACKAGES=(
@@ -67,6 +68,8 @@ PACKAGES=(
     'awesome-extra'
     'fs-icons'
     'conky-manager'
+    'redshift'
+    'oracle-java8-installer'
 )
 
 

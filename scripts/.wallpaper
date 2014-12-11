@@ -4,6 +4,7 @@
 killall mplayer > /dev/null
 
 XFLAGS="-ni -fs -nf -ov"
-MFLAGS="-wid WID -quiet -loop 0 -geometry 0:0 -noconsolecontrols"
+MFLAGS="-wid WID -quiet -loop 0 -volume 0 -geometry 0:0 -noconsolecontrols"
 
-xwinwrap $XFLAGS -- mplayer $MFLAGS ~/Videos/massEffect3Wallpaper.mp4 2>&1 /dev/null &
+# xwinwrap $XFLAGS -- mplayer $MFLAGS ~/Videos/massEffect3Wallpaper.mp4 2>&1 /dev/null &
+xwinwrap $XFLAGS -- mplayer $MFLAGS ~/Videos/space.mp4 > /dev/null &
