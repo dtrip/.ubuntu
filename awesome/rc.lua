@@ -11,6 +11,8 @@ beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
+
+radical = require("radical")
 blingbling = require("blingbling")
 
 -- Number of CPU cores
@@ -60,26 +62,6 @@ end
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 beautiful.init("~/.config/awesome/themes/powerarrow-darker/theme.lua")
 
--- requires after theme has been loaded
-require("cpu")
-require("net")
-require("volume")
-require("calendar")
-require("battery")
-
--- This is used later as the default terminal and editor to run.
-terminal = "terminator"
-chrome = "google-chrome"
-firefox = "firefox"
--- nemo = "nemo --no-desktop"
-fileman = 'thunar'
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
-
-restart_cmd = "shutdown -r now"
-shutdown_cmd = "shutdown now"
-
-
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
 -- If you do not like this or do not have such a key,
@@ -88,22 +70,43 @@ shutdown_cmd = "shutdown now"
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
-local layouts =
-{
+layouts = {
     awful.layout.suit.floating,
-    awful.layout.suit.tile,
+    -- awful.layout.suit.tile,
     awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
+    -- awful.layout.suit.tile.bottom,
+    -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
+    -- awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.spiral,
     awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
+    -- awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier
+    -- awful.layout.suit.magnifier
 }
 -- }}}
+
+-- requires after theme has been loaded
+require("cpu")
+require("net")
+require("volume")
+require("calendar")
+require("battery")
+require("menu")
+require("tags")
+
+-- This is used later as the default terminal and editor to run.
+terminal = "terminator"
+chrome = "google-chrome"
+firefox = "firefox"
+fileman = "nemo --no-desktop"
+-- fileman = 'thunar'
+editor = os.getenv("EDITOR") or "editor"
+editor_cmd = terminal .. " -e " .. editor
+
+restart_cmd = "shutdown -r now"
+shutdown_cmd = "shutdown now"
+
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
@@ -116,12 +119,14 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 
-tags = {}
+-- tags = {}
 
-for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    tags[s] = awful.tag({ '>_', 'WwW', 'G!mp', 4, 5, 6, 7, 8, 9 }, s, layouts[1])
-end
+-- ter_icon = wibox.widget.imagebox()
+-- www_icon = wibox.widget.imagebox()
+-- gmp_icon = wibox.widget.imagebox()
+
+-- ter_icon:set_image(beautiful.term_icon)
+
 -- }}}
 
 -- {{{ Menu
@@ -136,12 +141,13 @@ myawesomemenu = {
    { "Shutdown Computer", shutdown_cmd }
 }
 
-mymainmenu = awful.menu({ items = { { "Awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian, beautiful.debian },
-                                    { "Chrome", chrome, beautiful.chrome },
-                                    { "Terminal", terminal, beautiful.terminal },
+mymainmenu = awful.menu({ items = { 
+                                    { "Chrome", chrome, beautiful.www_icon },
+                                    { "Terminal", terminal, beautiful.term_icon },
                                     { "Files", fileman, beautiful.files },
-                                    { "Firefox", firefox, beautiful.firefox }
+                                    { "Firefox", firefox, beautiful.firefox },
+                                    { "Main Menu", debian.menu.Debian_menu.Debian, beautiful.debian },
+                                    { "Awesome", myawesomemenu, beautiful.awesome_icon }
                                   }
                         })
 
@@ -198,6 +204,8 @@ mywibox = {}
 mypromptbox = {}
 mylayoutbox = {}
 mytaglist = {}
+mystatusbar = {}
+
 mytaglist.buttons = awful.util.table.join(
                     awful.button({ }, 1, awful.tag.viewonly),
                     awful.button({ modkey }, 1, awful.client.movetotag),
@@ -261,11 +269,14 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
+    -- [[
     mywibox[s] = awful.wibox({ position = "top", screen = s })
+    mystatusbar[s] = awful.wibox({ position = "bottom", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     left_layout:add(mylauncher)
+    -- left_layout:add(menubox)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
 
@@ -322,6 +333,9 @@ for s = 1, screen.count() do
     layout:set_right(right_layout)
 
     mywibox[s]:set_widget(layout)
+
+    mystatusbar[s]:set_widget(rbox)
+    -- ]]--
 end
 -- }}}
 
@@ -395,14 +409,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Brightness
-    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 15") end),
-    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 15") end),
+    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 5") end),
+    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 5") end),
 
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end)
-    -- awful.key({                   }, "F10", function() toggle_conky() end),
-    -- awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer set Master 9%+", false) end),
-    -- awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer set Master 9%-", false) end),
-    -- awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -D pulse set Master 1+ toggle", false) end)
+    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    -- awful.key({ }, "F10", function() toggle_conky() end),
+    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 1 set Master 5%+", false) end),
+    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 1 set Master 5%-", false) end),
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 1 set Master toggle", false) end)
 
 )
 
@@ -569,6 +583,7 @@ client.connect_signal("manage", function (c, startup)
         layout:set_middle(middle_layout)
 
         awful.titlebar(c):set_widget(layout)
+        awful.statusbar(c):set_widget(menubar)
     end
 end)
 

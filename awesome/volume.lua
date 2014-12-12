@@ -27,6 +27,14 @@ bvol:set_background_color(beautiful.bg_focus)
 bvol:set_master_control()
 bvol:set_bar(true)
 
+vicious.register(bvol, vicious.widgets.volume,
+function(widget, args)
+    -- local label = { ["♫"] = "O", ["♩"] = "M" }
+    return args[1]
+end, 2, "PCH")
+
+
+
 
 -- local wibox = require("wibox")
 -- local awful = require("awful")
