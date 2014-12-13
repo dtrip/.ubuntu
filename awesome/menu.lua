@@ -1,11 +1,33 @@
 
-    bar_menu, bar_menu_w = radical.bar {
+
+    local bar_menu, bar_menu_w = radical.bar {
+        item_style = radical.item.style.arrow_prefix,
+        disable_submenu_icon = true,
+        bg_hover = "#00ff00",
+        bg_focus = "#00ff00"
     }
 
-    it = bar_menu:add_item {
+    local app_menu = nil
+
+    local it = bar_menu:add_item {
         text = "Apps",
-        tooltip = "Application Menu"
-    }
+        icon = beautiful.ubuntu_drk,
+        tooltip = "Application Menu",
+        sub_menu = function ()
+            local smenu = radical.context{}
+            smenu:add_item{ text="tst" }
+            return smenu
+        end}
+
+    it = bar_menu:add_item {
+        text = "Places",
+        icon = beautiful.folder,
+        tooltip = "Application Menu",
+        sub_menu = function ()
+            local smenu = radical.context{}
+            smenu:add_item{ text="Home" }
+            return smenu
+        end}
 
     it.state[radical.base.item_flags.USED] = true
 

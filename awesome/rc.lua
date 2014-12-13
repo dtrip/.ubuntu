@@ -306,7 +306,6 @@ for s = 1, screen.count() do
         right_layout:add(cpu_graphs[i])
     end
 
-
     right_layout:add(cpuwidget)
     right_layout:add(arrl_dl)
     right_layout:add(memicon)
