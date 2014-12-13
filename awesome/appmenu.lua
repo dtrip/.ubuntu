@@ -2,8 +2,11 @@ local radical  = require("radical")
 local fd_async = require("utils.fd_async")
 local util     = require("awful.util")
 
-local dirs = { '/usr/share/applications/', '/usr/local/share/applications/',
-  '~/.local/share/applications/', '/home/kde-devel/kde/share/applications/' }
+local dirs = {
+    '/usr/share/applications/',
+    '/usr/local/share/applications/',
+    '~/.local/share/applications/'
+}
 
 -- TODO this can be extracted from /etc/xdg/menus/kde-4-applications.menu or the Gnome one
 local categories = {

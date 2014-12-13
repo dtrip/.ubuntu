@@ -49,7 +49,8 @@ PPA=(
 #   TODO associated arrays for path
 GIT= (
     'git://git.naquadah.org/oocairo.git'
-    'https://github.com/Elv13/radical.git'
+    'git@github.com:wgallios/radical.git'
+    'git@github.com:wgallios/awesome-configs.git'
 )
 
 PACKAGES=(
