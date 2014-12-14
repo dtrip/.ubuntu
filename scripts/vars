@@ -78,6 +78,10 @@ PACKAGES=(
     'conky-manager'
     'redshift'
     'oracle-java8-installer'
+    'android-tools-adb'
+    'android-tools-adbd'
+    'android-tools-fastboot'
+    'android-tools-fsutils'
 )
 
 

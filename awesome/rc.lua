@@ -8,7 +8,7 @@ wibox = require("wibox")
 -- Theme handling library
 beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
+naughty = require("naughty")
 local menubar = require("menubar")
 local vicious = require("vicious")
 
@@ -106,7 +106,6 @@ editor_cmd = terminal .. " -e " .. editor
 
 restart_cmd = "shutdown -r now"
 shutdown_cmd = "shutdown now"
-
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
@@ -271,7 +270,7 @@ for s = 1, screen.count() do
     -- Create the wibox
     -- [[
     mywibox[s] = awful.wibox({ position = "top", screen = s })
-    mystatusbar[s] = awful.wibox({ position = "bottom", screen = s })
+    -- mystatusbar[s] = awful.wibox({ position = "bottom", screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -296,9 +295,12 @@ for s = 1, screen.count() do
     right_layout:add(bvol)
     -- right_layout:add(volwidget)
     right_layout:add(arrl_dl)
+    right_layout:add(spacer)
     right_layout:add(baticon)
+    right_layout:add(spacer)
+    right_layout:add(spacer)
     -- right_layout:add(batwidget)
-    right_layout:add(batg)
+    -- right_layout:add(batg)
     right_layout:add(arrl_ld)
     right_layout:add(cpuicon)
 
@@ -333,7 +335,7 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 
-    mystatusbar[s]:set_widget(rbox)
+    -- mystatusbar[s]:set_widget(rbox)
     -- ]]--
 end
 -- }}}
@@ -408,14 +410,19 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Brightness
-    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 1") end),
+    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 1") end),
 
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
     -- awful.key({ }, "F10", function() toggle_conky() end),
     awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 1 set Master 5%+", false) end),
     awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 1 set Master 5%-", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 1 set Master toggle", false) end)
+    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 1 set Master toggle", false) end),
+
+    -- executes script to enable only primary monitor
+    awful.key({ modkey, "Shift" }, "Down", function () awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_disconnect &", false) end),
+    -- executes script to enable secondary external monitor (in this case HDMI1)
+    awful.key({ modkey, "Shift" }, "Up", function () awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_connect &", false) end)
 
 )
 

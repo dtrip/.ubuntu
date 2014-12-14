@@ -19,7 +19,7 @@ volicon:set_bg(beautiful.bg_focus)
 -- end, 2, "PCM")
 
 -- bling bling volume widget
-bvol = blingbling.volume.new()
+bvol = blingbling.volume()
 -- bvol:set_height(16)
 bvol:set_width(30)
 bvol:set_background_color(beautiful.bg_focus)

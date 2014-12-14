@@ -64,18 +64,136 @@ batg = blingbling.line_graph({
 })
 
 baticon = wibox.widget.imagebox()
+
+local btimer = 0 -- battery timer in seconds
+local binterval = 5 -- interval to check battery
+local bnotify = 120 -- notify user every 2 min
+local ac = false -- set flag if on ac power
+
 vicious.register(batg, vicious.widgets.bat,
     function (widget, args)
+
+        local blvl = args[2]
+
         if args[1] == "-" then
-            baticon:set_image(beautiful.widget_battery)
-            if args[2] <= 40 then
-                baticon:set_image(beautiful.widget_battery_empty)
+            -- on battery power
+
+            -- ac power has just been disconnected since last check
+            -- will send a notification
+            if ac == true then
+               -- display notification
+                naughty.notify({
+                    text = "on battery power",
+                    position = "top_right",
+                    timeout = 3,
+                    icon = beautiful.battery_60,
+                    screen = 1,
+                    ontop = true
+                })
             end
+
+            -- set ac power flag to false
+            ac = false
+            local nicon = beautiful.battery_40
+            local msg = "Your battery is dying."
+
+            if blvl >= 90 then
+                baticon:set_image(beautiful.battery_100)
+            elseif blvl >= 70 then
+                baticon:set_image(beautiful.battery_80)
+            elseif blvl >= 50 then
+                baticon:set_image(beautiful.battery_60)
+            elseif blvl >= 30 then
+                baticon:set_image(beautiful.battery_40)
+            elseif blvl >= 10 then
+                baticon:set_image(beautiful.battery_20)
+            else
+                baticon:set_image(beautiful.battery_00)
+            end
+
+            -- if below 40%, warn user
+            if args[2] <= 40 then
+
+                -- 30%+
+                if (args[2] >= 30) then
+                    msg = 'Your battery is dying. ' .. args[2] .. '%'
+                    nicon = beautiful.battery_40
+                elseif (args[2] >= 20) then
+                    msg = 'Your battery is dying, and you\'re basically doing nothing... ' .. args[2] .. '%'
+                    nicon = beautiful.battery_20
+                elseif (args[2] >= 10) then
+                    msg = 'Wow do you even care?' .. args[2] .. '%'
+                    nicon = beautiful.battery_00
+                elseif (args[2] >= 5) then
+                    msg = 'Maann, if you let me die, watch what happens. Do it. Bet you wont. You aint that crazy' .. args[2] .. '%'
+                    nicon = beautiful.battery_00
+                elseif (args[2] >= 2) then
+                    msg = 'WFFDKLSF:#@R:EF!!! Dude!! comemon!!!?' .. args[2] .. '%'
+                    nicon = beautiful.battery_00
+                elseif (args[2] >= 1) then
+                    msg = 'nah I\'m actually just shutting down now.. I wanted to turn off is the thing' .. args[2] .. '%'
+                    nicon = beautiful.battery_empty
+                end -- fi
+
+
+                -- checks if enough time has passed to notify user
+                if btimer >= bnotify then
+
+                    -- display notification
+                    naughty.notify({
+                        text = msg,
+                        position = "top_right",
+                        timeout = 3,
+                        icon = nicon,
+                        screen = 1,
+                        ontop = true
+                    })
+
+                    -- reset timer
+                    btimer = 0
+                end -- fi
+            end -- fi
         else
-            baticon:set_image(beautiful.widget_ac)
+            -- on AC power
+
+            -- ac power has just been connected since last check
+            -- will send a notification
+            if ac == false then
+               -- display notification
+                naughty.notify({
+                    text = "on ac power",
+                    position = "top_right",
+                    timeout = 3,
+                    icon = beautiful.battery_ac,
+                    screen = 1,
+                    ontop = true
+                })
+            end
+
+            -- set ac power flag to true
+            ac = true
+
+            -- if statement to figure out which icon for menu bar
+            if blvl >= 90 then
+                baticon:set_image(beautiful.battery_100_charging)
+            elseif blvl >= 70 then
+                baticon:set_image(beautiful.battery_80_charging)
+            elseif blvl >= 50 then
+                baticon:set_image(beautiful.battery_60_charging)
+            elseif blvl >= 30 then
+                baticon:set_image(beautiful.battery_40_charging)
+            elseif blvl >= 10 then
+                baticon:set_image(beautiful.battery_20_charging)
+            else
+                baticon:set_image(beautiful.battery_ac)
+            end
         end
+
+        -- adds timer increment
+        btimer = btimer + binterval
+
         return args[2]
-    end, 30, "BAT0")
+    end, binterval, "BAT0")
 
 -- battery icon
 -- baticon:set_image(beautiful.widget_battery)

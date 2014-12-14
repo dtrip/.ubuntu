@@ -1,10 +1,11 @@
 
 
     local bar_menu, bar_menu_w = radical.bar {
-        item_style = radical.item.style.arrow_prefix,
+        item_style = radical.item.style.arrow_alt,
+        style = radical.item.style.classic,
         disable_submenu_icon = true,
-        bg_hover = "#00ff00",
-        bg_focus = "#00ff00"
+        -- bg_hover = "#00ff00",
+        -- bg_focus = "#00ff00"
     }
 
     local app_menu = nil
@@ -14,8 +15,10 @@
         icon = beautiful.ubuntu_drk,
         tooltip = "Application Menu",
         sub_menu = function ()
-            local smenu = radical.context{}
-            smenu:add_item{ text="tst" }
+            local smenu = radical.context{
+            }
+            smenu:add_item{ text="Menu Item", icon=beautiful.firefox }
+            smenu:add_item{ text="Menu Item2", icon=beautiful.firefox }
             return smenu
         end}
 
