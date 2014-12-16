@@ -9,8 +9,11 @@
 -- calw:set_title_text_color(beautiful.bg_focus)
 
 --  Date widget
-datewidget = wibox.widget.textbox()
-vicious.register(datewidget, vicious.widgets.date, "%b %d,%l:%M %p ", 60)
+datewidget_txt = wibox.widget.textbox()
+datewidget = wibox.widget.background()
+datewidget:set_widget(datewidget_txt)
+datewidget:set_bg(beautiful.arrow_bg_1)
+vicious.register(datewidget_txt, vicious.widgets.date, "%b %d,%l:%M %p ", 60)
 
 -- Create a textclock widget
 -- mytextclock = awful.widget.textclock()

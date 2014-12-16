@@ -82,6 +82,7 @@ PACKAGES=(
     'android-tools-adbd'
     'android-tools-fastboot'
     'android-tools-fsutils'
+    'phablet-tools'
 )
 
 

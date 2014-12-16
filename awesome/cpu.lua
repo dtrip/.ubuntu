@@ -1,14 +1,25 @@
+
+cpuicon = wibox.widget.imagebox()
+cpuicon:set_image(beautiful.pa_cpu)
+
+-- CPU Widget
+-- cpuwidget_txt = wibox.widget.textbox()
+-- cpuwidget = wibox.widget.background()
+
+-- cpuwidget:set_widget(cpuwidget_txt)
+-- cpuwidget:set_bg(beautiful.bg_focus)
+-- vicious.register(cpuwidget_txt, vicious.widgets.cpu, "")
+
+
 -- CPU Bling bling graph and friends
-
-
 cpu_conf = {
     height = 21,
     width = 8,
     rounded_size = 0.5,
-    -- graph_background_color = beautiful.bg_focus,
-    background_color = beautiful.bg_focus,
-    -- graph_background_border = beautiful.bg_focus,
-    background_border = beautiful.bg_focus
+    -- graph_background_color = beautiful.arrow_bg_4,
+    background_color = beautiful.arrow_bg_4,
+    -- graph_background_border = beautiful.arrow_bg_4,
+    background_border = beautiful.arrow_bg_4
 }
 
 cpu_graphs = {}

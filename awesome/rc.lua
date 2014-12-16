@@ -169,34 +169,51 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
     arrl_ld_sf = wibox.widget.imagebox()
     arrl_ld_sf:set_image(beautiful.arrl_ld_sf)
+
+
+    -- colored arrows
+    arr1 = wibox.widget.imagebox()
+    arr1:set_image(beautiful.arr1)
+
+    arr2 = wibox.widget.imagebox()
+    arr2:set_image(beautiful.arr2)
+
+    arr3 = wibox.widget.imagebox()
+    arr3:set_image(beautiful.arr3)
+    
+    arr4 = wibox.widget.imagebox()
+    arr4:set_image(beautiful.arr4)
+
+    arr5 = wibox.widget.imagebox()
+    arr5:set_image(beautiful.arr5)
+
+    arr6 = wibox.widget.imagebox()
+    arr6:set_image(beautiful.arr6)
+
+    arr7 = wibox.widget.imagebox()
+    arr7:set_image(beautiful.arr7)
+
+    arr8 = wibox.widget.imagebox()
+    arr8:set_image(beautiful.arr8)
+
+    arr9 = wibox.widget.imagebox()
+    arr9:set_image(beautiful.arr9)
 -- }}}
 
 -- {{{ Wibox
--- CPU Widget
-cpuwidget_txt = wibox.widget.textbox()
-cpuwidget = wibox.widget.background()
-cpuicon = wibox.widget.imagebox()
-
-cpuwidget:set_widget(cpuwidget_txt)
-cpuwidget:set_bg(beautiful.bg_focus)
-cpuicon:set_image(beautiful.widget_cpu)
-vicious.register(cpuwidget_txt, vicious.widgets.cpu, "")
+-- memory icon
+memicon = wibox.widget.background()
+memicon_img = wibox.widget.imagebox()
+memicon_img:set_image(beautiful.widget_mem)
+memicon:set_widget(memicon_img)
+memicon:set_bg(beautiful.arrow_bg_3)
 
 --  Memory Widget
-memwidget = wibox.widget.textbox()
-memicon = wibox.widget.imagebox()
-memicon:set_image(beautiful.widget_mem)
-vicious.register(memwidget, vicious.widgets.mem, "$1% $2MB ", 13)
-
--- wifi
-neticon = wibox.widget.imagebox()
-neticon:set_image(beautiful.widget_net)
-
-wifiwidget_txt = wibox.widget.textbox()
-wifiwidget = wibox.widget.background()
-wifiwidget:set_widget(wifiwidget_txt)
-wifiwidget:set_bg(beautiful.bg_focus)
-vicious.register(wifiwidget_txt, vicious.widgets.wifi, "${ssid} ${linp}%", 3, 'wlan0')
+memwidget_txt = wibox.widget.textbox()
+memwidget = wibox.widget.background()
+memwidget:set_widget(memwidget_txt)
+memwidget:set_bg(beautiful.arrow_bg_3)
+vicious.register(memwidget_txt, vicious.widgets.mem, "$1% $2MB ", 13)
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -290,41 +307,41 @@ for s = 1, screen.count() do
         right_layout:add(spacer)
     end
 
-    right_layout:add(arrl_ld)
+    right_layout:add(arr8)
     right_layout:add(volicon)
     right_layout:add(bvol)
     -- right_layout:add(volwidget)
-    right_layout:add(arrl_dl)
-    right_layout:add(spacer)
+    right_layout:add(arr6)
+    -- right_layout:add(spacer)
     right_layout:add(baticon)
-    right_layout:add(spacer)
-    right_layout:add(spacer)
+    -- right_layout:add(spacer)
+    -- right_layout:add(spacer)
     -- right_layout:add(batwidget)
     -- right_layout:add(batg)
-    right_layout:add(arrl_ld)
+    right_layout:add(arr5)
     right_layout:add(cpuicon)
 
     for i=1,CORES do
         right_layout:add(cpu_graphs[i])
     end
 
-    right_layout:add(cpuwidget)
-    right_layout:add(arrl_dl)
+    -- right_layout:add(cpuwidget)
+    right_layout:add(arr4)
     right_layout:add(memicon)
     right_layout:add(memwidget)
-    right_layout:add(arrl_ld)
+    right_layout:add(arr3)
     right_layout:add(neticon)
     right_layout:add(wifiwidget)
     right_layout:add(netwidget)
-    right_layout:add(arrl_dl)
+    right_layout:add(arr2)
 
     -- right_layout:add(volume_widget)
     -- right_layout:add(mytextclock)
     --
-    right_layout:add(spacer)
+    -- right_layout:add(spacer)
     right_layout:add(datewidget)
     -- right_layout:add(calw)
-    right_layout:add(arrl_ld)
+    right_layout:add(arr1)
     right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
@@ -519,7 +536,17 @@ awful.rules.rules = {
       properties = { floating = true } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
-    --   properties = { tag = tags[1][2] } },
+    --   properties = { tag = tags[2][1] } },
+    --
+    -- Set Firefox to always map on tags number 2 of screen 1.
+    -- {
+    --     rule = {
+    --         class = "Chrome"
+    --     },
+    --     properties = {
+    --         tag = tags[1][2]
+    --     }
+    -- },
 }
 -- }}}
 

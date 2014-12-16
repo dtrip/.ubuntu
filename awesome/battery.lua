@@ -63,7 +63,13 @@ batg = blingbling.line_graph({
     rounded_size = 0.5
 })
 
-baticon = wibox.widget.imagebox()
+
+-- icon
+baticon = wibox.widget.background()
+baticon_img = wibox.widget.imagebox()
+baticon:set_widget(baticon_img)
+baticon:set_bg(beautiful.arrow_bg_5)
+
 
 local btimer = 0 -- battery timer in seconds
 local binterval = 5 -- interval to check battery
@@ -98,17 +104,17 @@ vicious.register(batg, vicious.widgets.bat,
             local msg = "Your battery is dying."
 
             if blvl >= 90 then
-                baticon:set_image(beautiful.battery_100)
+                baticon_img:set_image(beautiful.battery_100)
             elseif blvl >= 70 then
-                baticon:set_image(beautiful.battery_80)
+                baticon_img:set_image(beautiful.battery_80)
             elseif blvl >= 50 then
-                baticon:set_image(beautiful.battery_60)
+                baticon_img:set_image(beautiful.battery_60)
             elseif blvl >= 30 then
-                baticon:set_image(beautiful.battery_40)
+                baticon_img:set_image(beautiful.battery_40)
             elseif blvl >= 10 then
-                baticon:set_image(beautiful.battery_20)
+                baticon_img:set_image(beautiful.battery_20)
             else
-                baticon:set_image(beautiful.battery_00)
+                baticon_img:set_image(beautiful.battery_00)
             end
 
             -- if below 40%, warn user
@@ -118,18 +124,23 @@ vicious.register(batg, vicious.widgets.bat,
                 if (args[2] >= 30) then
                     msg = 'Your battery is dying. ' .. args[2] .. '%'
                     nicon = beautiful.battery_40
+                -- 20% - 29%
                 elseif (args[2] >= 20) then
                     msg = 'Your battery is dying, and you\'re basically doing nothing... ' .. args[2] .. '%'
                     nicon = beautiful.battery_20
+                -- 10% - 19%
                 elseif (args[2] >= 10) then
                     msg = 'Wow do you even care?' .. args[2] .. '%'
                     nicon = beautiful.battery_00
+                -- 5% - 9%
                 elseif (args[2] >= 5) then
                     msg = 'Maann, if you let me die, watch what happens. Do it. Bet you wont. You aint that crazy' .. args[2] .. '%'
                     nicon = beautiful.battery_00
+                -- 2% - 4%
                 elseif (args[2] >= 2) then
                     msg = 'WFFDKLSF:#@R:EF!!! Dude!! comemon!!!?' .. args[2] .. '%'
                     nicon = beautiful.battery_00
+                -- 1% - anything else - you got bigger issues
                 elseif (args[2] >= 1) then
                     msg = 'nah I\'m actually just shutting down now.. I wanted to turn off is the thing' .. args[2] .. '%'
                     nicon = beautiful.battery_empty
