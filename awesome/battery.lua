@@ -186,17 +186,17 @@ vicious.register(batg, vicious.widgets.bat,
 
             -- if statement to figure out which icon for menu bar
             if blvl >= 90 then
-                baticon:set_image(beautiful.battery_100_charging)
+                baticon_img:set_image(beautiful.battery_100_charging)
             elseif blvl >= 70 then
-                baticon:set_image(beautiful.battery_80_charging)
+                baticon_img:set_image(beautiful.battery_80_charging)
             elseif blvl >= 50 then
-                baticon:set_image(beautiful.battery_60_charging)
+                baticon_img:set_image(beautiful.battery_60_charging)
             elseif blvl >= 30 then
-                baticon:set_image(beautiful.battery_40_charging)
+                baticon_img:set_image(beautiful.battery_40_charging)
             elseif blvl >= 10 then
-                baticon:set_image(beautiful.battery_20_charging)
+                baticon_img:set_image(beautiful.battery_20_charging)
             else
-                baticon:set_image(beautiful.battery_ac)
+                baticon_img:set_image(beautiful.battery_ac)
             end
         end
 

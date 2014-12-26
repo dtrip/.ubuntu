@@ -104,6 +104,8 @@ fileman = "nemo --no-desktop"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
+terminology = "terminology"
+
 restart_cmd = "shutdown -r now"
 shutdown_cmd = "shutdown now"
 
@@ -145,6 +147,7 @@ mymainmenu = awful.menu({ items = {
                                     { "Terminal", terminal, beautiful.term_icon },
                                     { "Files", fileman, beautiful.files },
                                     { "Firefox", firefox, beautiful.firefox },
+                                    { "Terminology", terminology, beautiful.term_icon },
                                     { "Main Menu", debian.menu.Debian_menu.Debian, beautiful.debian },
                                     { "Awesome", myawesomemenu, beautiful.awesome_icon }
                                   }
@@ -427,8 +430,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Brightness
-    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 1") end),
-    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 1") end),
+    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 5") end),
+    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 5") end),
 
     awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
     -- awful.key({ }, "F10", function() toggle_conky() end),
