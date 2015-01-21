@@ -23,7 +23,9 @@ require("debian.menu")
 
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
+awful.util.spawn_with_shell("naturalscrolling &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
+awful.util.spawn_with_shell("solaar &")
 -- awful.util.spawn_with_shell("sh ~/.wallpaper &")
 -- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
@@ -92,7 +94,7 @@ require("net")
 require("volume")
 require("calendar")
 require("battery")
-require("menu")
+-- require("menu")
 require("tags")
 
 -- This is used later as the default terminal and editor to run.
