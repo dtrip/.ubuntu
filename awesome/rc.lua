@@ -95,6 +95,7 @@ require("volume")
 require("calendar")
 require("battery")
 -- require("menu")
+require("java")
 require("tags")
 
 -- This is used later as the default terminal and editor to run.
