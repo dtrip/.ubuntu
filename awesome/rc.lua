@@ -23,9 +23,10 @@ require("debian.menu")
 
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
-awful.util.spawn_with_shell("naturalscrolling &")
+-- awful.util.spawn_with_shell("naturalscrolling &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
 awful.util.spawn_with_shell("solaar &")
+awful.util.spawn_with_shell("nm-applet &")
 -- awful.util.spawn_with_shell("sh ~/.wallpaper &")
 -- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
@@ -76,14 +77,14 @@ layouts = {
     awful.layout.suit.floating,
     -- awful.layout.suit.tile,
     awful.layout.suit.tile.left,
-    -- awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
+    -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
+    -- awful.layout.suit.max.fullscreen,
     -- awful.layout.suit.magnifier
 }
 -- }}}
@@ -94,6 +95,7 @@ require("net")
 require("volume")
 require("calendar")
 require("battery")
+require("osk")
 -- require("menu")
 require("java")
 require("tags")
@@ -101,6 +103,7 @@ require("tags")
 -- This is used later as the default terminal and editor to run.
 terminal = "terminator"
 chrome = "google-chrome"
+ichrome = "google-chrome --incognito"
 firefox = "firefox"
 fileman = "nemo --no-desktop"
 -- fileman = 'thunar'
@@ -146,6 +149,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { 
+                                    { "Incognito Chrome", ichrome, beautiful.www_icon },
                                     { "Chrome", chrome, beautiful.www_icon },
                                     { "Terminal", terminal, beautiful.term_icon },
                                     { "Files", fileman, beautiful.files },
@@ -213,12 +217,14 @@ memicon_img = wibox.widget.imagebox()
 memicon_img:set_image(beautiful.widget_mem)
 memicon:set_widget(memicon_img)
 memicon:set_bg(beautiful.arrow_bg_3)
+memicon:set_fg(beautiful.bg_normal)
 
 --  Memory Widget
 memwidget_txt = wibox.widget.textbox()
 memwidget = wibox.widget.background()
 memwidget:set_widget(memwidget_txt)
 memwidget:set_bg(beautiful.arrow_bg_3)
+memwidget:set_fg(beautiful.bg_normal)
 vicious.register(memwidget_txt, vicious.widgets.mem, "$1% $2MB ", 13)
 
 -- Create a wibox for each screen and add it
@@ -267,10 +273,12 @@ mytasklist.buttons = awful.util.table.join(
                      awful.button({ }, 4, function ()
                                               awful.client.focus.byidx(1)
                                               if client.focus then client.focus:raise() end
+                                              -- delay_raise()
                                           end),
                      awful.button({ }, 5, function ()
                                               awful.client.focus.byidx(-1)
                                               if client.focus then client.focus:raise() end
+                                              -- delay_raise()
                                           end))
 
 for s = 1, screen.count() do
@@ -381,11 +389,13 @@ globalkeys = awful.util.table.join(
         function ()
             awful.client.focus.byidx( 1)
             if client.focus then client.focus:raise() end
+            -- delay_raise()
         end),
     awful.key({ modkey,           }, "k",
         function ()
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
+            -- delay_raise()
         end),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
@@ -398,6 +408,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
+            -- delay_raise()
             if client.focus then
                 client.focus:raise()
             end
