@@ -1,5 +1,7 @@
 #! /bin/sh
 
+GITHUBUSER='dtrip'
+
 # Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 
@@ -9,13 +11,13 @@
 . /lib/lsb/init-functions
 
 # to Download and execute:
-wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh > /dev/null
+wget --no-check-certificate https://raw.githubusercontent.com/$GITHUBUSER/.ubuntu/master/install -O - | sh > /dev/null
 
 # ensures folder for src has been created
 mkdir -p ~/.ubuntu > /dev/null
 
 # clones repo
-git clone https://raw.githubusercontent.com/wgallios/.ubuntu/master/install ~/.ubuntu > /dev/null
+git clone https://raw.githubusercontent.com/$GITHUBUSER/.ubuntu/master/install ~/.ubuntu > /dev/null
 
 # changes dir to that directory
 cd ~/.ubuntu > /dev/null

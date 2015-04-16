@@ -35,7 +35,7 @@ Ubuntu Versions: 14.04
 
 ## Install
 ```
-wget --no-check-certificate https://raw.githubusercontent.com/wgallios/.ubuntu/master/install -O - | sh
+wget --no-check-certificate https://raw.githubusercontent.com/dtrip/.ubuntu/master/install -O - | sh
 ```
 
 ## License
