@@ -26,7 +26,13 @@ awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xm
 -- awful.util.spawn_with_shell("naturalscrolling &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
 awful.util.spawn_with_shell("solaar &")
-awful.util.spawn_with_shell("nm-applet &")
+--
+-- sets touch screen
+awful.util.spawn_with_shell("xinput set-prop 'SYNAPTICS Synaptics Touch Digitizer V04' 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1 &")
+
+-- sets network monitor applet in taskbar
+awful.util.spawn_with_shell("bash ~/.ubuntu/scripts/nm-applet.bash &")
+
 -- awful.util.spawn_with_shell("sh ~/.wallpaper &")
 -- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
 
