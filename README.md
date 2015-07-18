@@ -42,7 +42,7 @@ wget --no-check-certificate https://raw.githubusercontent.com/dtrip/.ubuntu/mast
 
 The MIT License (MIT)
 
-Copyright (c) 2014 William Gallios
+Copyright (c) 2015
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

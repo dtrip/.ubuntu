@@ -51,6 +51,11 @@ GIT= (
     'git://git.naquadah.org/oocairo.git'
     'git@github.com:wgallios/radical.git'
     'git@github.com:wgallios/awesome-configs.git'
+    'git@github.com:dtrip/tmux.git'
+    'git@github.com:dtrip/zshrc.git'
+    'git@github.com:dtrip/sqlmap.git'
+    'git@github.com:dtrip/metasploit-framework'
+    'git@github.com:dtrip/vim.git'
 )
 
 PACKAGES=(
@@ -60,12 +65,18 @@ PACKAGES=(
     'vim'
     'git'
     'tmux'
+    'htop'
+    'cmus'
+    'python-pip'
+    'iftop'
+    'iptraf'
+    'nethogs'
+    'chkrootkit'
     'multitail'
     'ack-grep'
     'nodejs'
     'nodejs-legacy'
     'zsh'
-    'tilda'
     'terminology'
     'slim'
     'faience-theme'
@@ -93,6 +104,8 @@ SRCLIST=(
     "deb http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main"
     "deb-src http://ppa.launchpad.net/docky-core/ppa/ubuntu $REL main"
     "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    "deb http://deb.torproject.org/torproject.org $REL main"
+    "deb-src http://deb.torproject.org/torproject.org $REL main"
 )
 
 # parent directory of /path/to/.ubuntu/scripts/vars </\--(YOU ARE HERE)

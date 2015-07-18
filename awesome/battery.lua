@@ -89,7 +89,8 @@ vicious.register(batg, vicious.widgets.bat,
             if ac == true then
                -- display notification
                 naughty.notify({
-                    text = "on battery power",
+                    title = "Battery",
+                    text = "You are now running on battery power",
                     position = "top_right",
                     timeout = 3,
                     icon = beautiful.battery_60,
@@ -152,6 +153,7 @@ vicious.register(batg, vicious.widgets.bat,
 
                     -- display notification
                     naughty.notify({
+                        title = args[2] .. "Battery",
                         text = msg,
                         position = "top_right",
                         timeout = 3,
@@ -172,7 +174,8 @@ vicious.register(batg, vicious.widgets.bat,
             if ac == false then
                -- display notification
                 naughty.notify({
-                    text = "on ac power",
+                    title = "Battery",
+                    text = "Now running on AC power",
                     position = "top_right",
                     timeout = 3,
                     icon = beautiful.battery_ac,

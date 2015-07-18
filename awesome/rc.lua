@@ -9,10 +9,12 @@ wibox = require("wibox")
 beautiful = require("beautiful")
 -- Notification library
 naughty = require("naughty")
-local menubar = require("menubar")
-local vicious = require("vicious")
-
 radical = require("radical")
+vicious = require("vicious")
+
+-- rwidgets = require("init")
+
+menubar = require("menubar")
 blingbling = require("blingbling")
 
 -- Number of CPU cores
@@ -21,17 +23,32 @@ CORES = 4
 -- Load Debian menu entries
 require("debian.menu")
 
+
+
+
+-- package.path = package.path .. ":/usr/local/lib/python2.7/dist-packages/powerline/bindings/awesome/"
+-- require('powerline')
+
+
+
+-- awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("xcompmgr -cfF -t-9 -l-11 -r9 -o.95 -D6 > /dev/null &")
 awful.util.spawn_with_shell("echo 'pointer = 1 2 3 5 4 7 6 8 9 10 11 12' > ~/.Xmodmap && xmodmap ~/.Xmodmap &")
 -- awful.util.spawn_with_shell("naturalscrolling &")
 awful.util.spawn_with_shell("xscreensaver -nosplash &")
-awful.util.spawn_with_shell("solaar &")
+-- awful.util.spawn_with_shell("solaar &")
 --
 -- sets touch screen
 awful.util.spawn_with_shell("xinput set-prop 'SYNAPTICS Synaptics Touch Digitizer V04' 'Coordinate Transformation Matrix' 1 0 0 0 1 0 0 0 1 &")
 
 -- sets network monitor applet in taskbar
 awful.util.spawn_with_shell("bash ~/.ubuntu/scripts/nm-applet.bash &")
+
+-- used to start solaar applet for logitech keyboards
+awful.util.spawn_with_shell("bash ~/.ubuntu/scripts/solaar.bash &")
+
+-- starts conky widgets
+awful.util.spawn_with_shell("bash ~/.ubuntu/scripts/conky.bash &")
 
 -- awful.util.spawn_with_shell("sh ~/.wallpaper &")
 -- awful.util.spawn_with_shell("sh ~/.conky/conky-startup.sh &")
@@ -59,7 +76,7 @@ do
         in_error = true
 
         naughty.notify({ preset = naughty.config.presets.critical,
-                         title = "Oops, an error happened!",
+                         title = "ERROR",
                          text = err })
         in_error = false
     end)
@@ -110,7 +127,11 @@ require("tags")
 terminal = "terminator"
 chrome = "google-chrome"
 ichrome = "google-chrome --incognito"
+
+--loads firefox with specified gtk-2.0 theme
+-- firefox = "env GTK2_RC_FILES=/usr/share/themes/Zuki/gtk-2.0/gtkrc firefox"
 firefox = "firefox"
+
 fileman = "nemo --no-desktop"
 -- fileman = 'thunar'
 editor = os.getenv("EDITOR") or "editor"
@@ -149,17 +170,17 @@ myawesomemenu = {
    { "Edit Config", editor_cmd .. " " .. awesome.conffile },
    { "Reload Awesome", awesome.restart },
    { "Log Out", awesome.quit },
-   { "/*_Chuck_Testa_*/", nil },
+   { "", nil },
    { "Restart Computer", restart_cmd },
    { "Shutdown Computer", shutdown_cmd }
 }
 
-mymainmenu = awful.menu({ items = { 
+mymainmenu = awful.menu({ items = {
+                                    { "Firefox", firefox, beautiful.firefox },
                                     { "Incognito Chrome", ichrome, beautiful.www_icon },
                                     { "Chrome", chrome, beautiful.www_icon },
                                     { "Terminal", terminal, beautiful.term_icon },
                                     { "Files", fileman, beautiful.files },
-                                    { "Firefox", firefox, beautiful.firefox },
                                     { "Terminology", terminology, beautiful.term_icon },
                                     { "Main Menu", debian.menu.Debian_menu.Debian, beautiful.debian },
                                     { "Awesome", myawesomemenu, beautiful.awesome_icon }
@@ -334,6 +355,7 @@ for s = 1, screen.count() do
     right_layout:add(arr6)
     -- right_layout:add(spacer)
     right_layout:add(baticon)
+    -- right_layout:add(rwidgets.battery())
     -- right_layout:add(spacer)
     -- right_layout:add(spacer)
     -- right_layout:add(batwidget)
@@ -372,6 +394,7 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 
+    -- mystatusbar[s]:set_widget(bar_menu_w)
     -- mystatusbar[s]:set_widget(rbox)
     -- ]]--
 end
@@ -397,6 +420,19 @@ globalkeys = awful.util.table.join(
             if client.focus then client.focus:raise() end
             -- delay_raise()
         end),
+
+    awful.key({modkey, "Shift"}, "m",
+        function()
+            awful.util.spawn_with_shell("~/.ubuntu/scripts/trackpad-toggle.sh &", false)
+            naughty.notify({
+                title = "Trackpad",
+                text = "Trackpad has been toggled",
+                position = top_right,
+                timeout = 2,
+                ontop = true
+            })
+        end),
+
     awful.key({ modkey,           }, "k",
         function ()
             awful.client.focus.byidx(-1)
@@ -450,19 +486,46 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Brightness
-    awful.key({ modkey, "Shift"      }, "p", function () awful.util.spawn("xbacklight -dec 5") end),
-    awful.key({ modkey, "Shift"      }, "o", function () awful.util.spawn("xbacklight -inc 5") end),
+    awful.key({ modkey, "Shift"      }, "p",
+        function ()
+            awful.util.spawn("xbacklight -dec 5") 
+        end),
 
-    awful.key({ modkey, "Control" }, "l", function () awful.util.spawn("xscreensaver-command -lock") end),
+    awful.key({ modkey, "Shift"      }, "o",
+        function ()
+            awful.util.spawn("xbacklight -inc 5")
+        end),
+
+    awful.key({ modkey, "Control" }, "l",
+        function ()
+            awful.util.spawn("xscreensaver-command -lock")
+        end),
+
     -- awful.key({ }, "F10", function() toggle_conky() end),
-    awful.key({ }, "XF86AudioRaiseVolume", function () awful.util.spawn("amixer -c 1 set Master 5%+", false) end),
-    awful.key({ }, "XF86AudioLowerVolume", function () awful.util.spawn("amixer -c 1 set Master 5%-", false) end),
-    awful.key({ }, "XF86AudioMute", function () awful.util.spawn("amixer -c 1 set Master toggle", false) end),
+    awful.key({ }, "XF86AudioRaiseVolume",
+        function ()
+            awful.util.spawn("amixer -c 1 set Master 5%+", false)
+        end),
+
+    awful.key({ }, "XF86AudioLowerVolume",
+        function ()
+            awful.util.spawn("amixer -c 1 set Master 5%-", false)
+        end),
+    awful.key({ }, "XF86AudioMute",
+        function ()
+            awful.util.spawn("amixer -c 1 set Master toggle", false)
+        end),
 
     -- executes script to enable only primary monitor
-    awful.key({ modkey, "Shift" }, "Down", function () awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_disconnect &", false) end),
+    awful.key({ modkey, "Shift" }, "Down",
+        function ()
+            awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_disconnect &", false)
+        end),
     -- executes script to enable secondary external monitor (in this case HDMI1)
-    awful.key({ modkey, "Shift" }, "Up", function () awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_connect &", false) end)
+    awful.key({ modkey, "Shift" }, "Up",
+        function ()
+            awful.util.spawn_with_shell("~/.ubuntu/scripts/ext_monitor_connect &", false)
+        end)
 
 )
 
@@ -550,7 +613,9 @@ awful.rules.rules = {
                      focus = awful.client.focus.filter,
                      raise = true,
                      keys = clientkeys,
-                     buttons = clientbuttons } },
+                     buttons = clientbuttons,
+                     size_hints_honor = falsei,
+                     callback = awful.client.setslave, } },
     { rule = { class = "MPlayer" },
       properties = { floating = true } },
     { rule = { class = "pinentry" },
@@ -639,10 +704,20 @@ client.connect_signal("manage", function (c, startup)
         layout:set_middle(middle_layout)
 
         awful.titlebar(c):set_widget(layout)
-        awful.statusbar(c):set_widget(menubar)
+        -- awful.statusbar(c):set_widget(menubar)
     end
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+client.disconnect_signal("request::activate", awful.ewmh.activate)
+function awful.ewmh.activate(c)
+    if c:isvisible() then
+        client.focus = c
+        c:raise()
+    end
+end
+client.connect_signal("request::activate", awful.ewmh.activate)
+
 -- }}}
