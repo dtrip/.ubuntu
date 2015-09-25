@@ -11,7 +11,7 @@ GITHUBUSER='dtrip'
 . /lib/lsb/init-functions
 
 # to Download and execute:
-wget --no-check-certificate https://raw.githubusercontent.com/$GITHUBUSER/.ubuntu/master/install -O - | sh > /dev/null
+# wget --no-check-certificate https://raw.githubusercontent.com/$GITHUBUSER/.ubuntu/master/install -O - | sh > /dev/null
 
 # ensures folder for src has been created
 mkdir -p ~/.ubuntu > /dev/null

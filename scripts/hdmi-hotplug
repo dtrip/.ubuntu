@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# File:         /usr/local/sbin/hdmi-hotplug
+#
+# Description:  Script to simply execute 
+#               commands and/or scripts when an external
+#               monitor is connected (HDMI in this case)
+#
+# License:      GPLv2
+# Author:       Dtrip
+# Date:         2015-09-21
+#
+#######################################
+##### ** This looks official **   #####
+#######################################
+#
+
+export DISPLAY=:0
+export XAUTHORITY=/root/.Xauthority
+
+# command/script to execute when connect
+# CONCMD="sh "
+
+# command/script to execute when disconnecting
+# DISCMD="sh "
+
+# Device
+HDMIEV=/sys/class/drm/card0-HDMI-A-1/status
+
+# Log Tag
+TAG="HDMI-hotplug"
+
+if [ $(cat $HDMIEV | grep -Ec "^connected") -eq 1 ]; then
+    logger -i -t $TAG "HDMI connected";
+    sleep 2s;
+    xrandr --output eDP1 --mode 2160x1440 --output HDMI1 --primary --mode 1920x1080 --right-of eDP1;
+    # exec /home/dtrip/.ubuntu/scripts/ext_monitor_connect
+    sleep 1s;
+    echo "awesome.restart()" | awesome-client;
+else
+    logger -i -t $TAG "HDMI disconnected";
+    xrandr --output eDP1 --primary --mode 2160x1440 --output HDMI1 --off;
+    # exec /home/dtrip/.ubuntu/scripts/ext_monitor_disconnect
+fi
+
+exit 0

@@ -47,7 +47,7 @@ PPA=(
 
 # GIT repos to clone
 #   TODO associated arrays for path
-GIT= (
+GIT=(
     'git://git.naquadah.org/oocairo.git'
     'git@github.com:wgallios/radical.git'
     'git@github.com:wgallios/awesome-configs.git'

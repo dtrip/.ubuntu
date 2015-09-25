@@ -4,9 +4,9 @@
 clear
 
 . ./scripts/vars
-PKGS = join , "$PACKAGES"
-echo "Pkgs:$PKGS"
-exit 1
+# PKGS = join , "$PACKAGES"
+# echo "Pkgs:$PKGS"
+# exit 1
 
 # ensures log file has been created
 touch "$DIR/log/$LOGFILE" > /dev/null
@@ -35,10 +35,10 @@ fi
 exit 1
 
 $DIR/scripts/copy_assets
-$DIR/scripts/install_bashrc
-$DIR/scripts/git_submodules
-$DIR/scripts/install_zsh
-$DIR/scripts/install_vim
+#$DIR/scripts/install_bashrc
+# $DIR/scripts/git_submodules
+# $DIR/scripts/install_zsh
+# $DIR/scripts/install_vim
 
 echo "\nSuccess: System setup complete!"
 

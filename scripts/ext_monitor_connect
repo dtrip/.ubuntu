@@ -2,6 +2,13 @@
 # Run script when external monitor connects to computer
 # in this situation HDMI cord into laptop (builtin display)
 
-# xrandr --output eDP1 --mode 1366x768 --output HDMI1 --mode 1920x1080 --right-of eDP1
-#xrandr --output eDP1 --mode 1366x768 --pos 0x462 --output HDMI1 --primary --mode 1920x1080 --pos 1366x0
-xrandr --output eDP1 --mode 1920x1080 --output HDMI1 --primary --mode 1920x1080 --right-of eDP1
+#log tag
+LT=HDMI
+
+logger -i -t $LT "Setting resolution for eDP1 and HDMI1"
+if xrandr --output eDP1 --mode 2160x1440 --output HDMI1 --primary --mode 1920x1080 --right-of eDP1; then
+    exit 0
+else
+    logger -is -t $LT "ERROR: Unable to set displays with xrandr"
+    exit 1
+fi

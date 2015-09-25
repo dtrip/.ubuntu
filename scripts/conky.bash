@@ -8,10 +8,12 @@ PID=$(pidof conky)
 
 if [ -z $PID ]; then
     conky -c ~/.conkyrc > /dev/null &
+    # conky -c ~/conk > /dev/null &
     exit 0
 else
     pkill conky
     sleep 5
     conky -c ~/.conkyrc > /dev/null &
+    # conky -c ~/conk > /dev/null &
     exit 0
 fi

@@ -1,0 +1,10 @@
+#
+# File:         /etc/udev/rules.d/99-hdmi-hotplug.rules
+#
+# Description:  udev rule for hdmi-hotplug script
+#
+# License:      GPLv2
+# Author:       Dtrip
+# Date:         2015-09-21
+#
+ACTION=="change", SUBSYSTEM=="drm", ENV{HOTPLUG}=="1", RUN+="/usr/local/sbin/hdmi-hotplug"
