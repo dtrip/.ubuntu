@@ -15,8 +15,11 @@
 #######################################
 #
 
+USER=$(whoami)
+export XAUTHORITY=/home/$USER/.Xauthority
 export DISPLAY=:0
-export XAUTHORITY=/root/.Xauthority
+
+# export XAUTHORITY=/root/.Xauthority
 
 # command/script to execute when connect
 # CONCMD="sh "

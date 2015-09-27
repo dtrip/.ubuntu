@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Run script when external monitor disconnects from device
 # in this situation HDMI cord from laptop
 

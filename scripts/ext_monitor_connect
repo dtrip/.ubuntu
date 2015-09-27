@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Run script when external monitor connects to computer
 # in this situation HDMI cord into laptop (builtin display)
 
